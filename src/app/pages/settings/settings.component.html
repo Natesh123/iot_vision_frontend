@@ -1,0 +1,117 @@
+<nb-card>
+        <nb-card-body> 
+ 		<div class="row">
+ 		<div class="col-sm-6">
+         <form class="register-form" name="form" (ngSubmit)="f.form.valid && changePassword()" #f="ngForm" novalidate class="form">
+            <p class="col-sm-3">Update Password</p>
+          <div class="row">
+          	 <div class="col-sm-12">
+              
+              <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !user_name.valid }">
+                  
+                <input type="text" nbInput fullWidth id="user_name" placeholder="Username" [(ngModel)]="model.user_name" name="user_name" #user_name="ngModel" required >
+              </div>
+              <div *ngIf="f.submitted && !user_name.valid" class="alert-warning">Username is required</div>
+            </div>
+            <br><br>
+            <div class="col-sm-12">
+              
+              <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !current_pass.valid }">
+                  
+                <input type="text" nbInput fullWidth id="current_pass" placeholder="Current Password" [(ngModel)]="model.current_pass" name="current_pass" #current_pass="ngModel" required >
+              </div>
+              <div *ngIf="f.submitted && !current_pass.valid" class="alert-warning">Current Password is required</div>
+            </div>
+            <br><br>
+             <div class="col-sm-12">
+              
+              <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !new_pass.valid }">
+                  
+                <input type="text" nbInput fullWidth id="new_pass" placeholder="New Password" [(ngModel)]="model.new_pass" name="new_pass" #new_pass="ngModel" required >
+              </div>
+              <div *ngIf="f.submitted && !new_pass.valid" class="alert-warning">New Password is required</div>
+            </div>
+			<br><br>
+             <div class="col-sm-12">
+              
+              <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !confirm_pass.valid }">
+                  
+                <input type="text" nbInput fullWidth id="confirm_pass" placeholder="Confirm Password" [(ngModel)]="model.confirm_pass" name="confirm_pass" #confirm_pass="ngModel" required pattern="{{ new_pass.value }}">
+              </div>
+              <div *ngIf="f.submitted && !confirm_pass.valid" class="alert-warning">Password & Confirm Password does not match.</div>
+              <!-- <div *ngIf="f.submitted && confirm_pass.errors.pattern"> Password & Confirm Password does not match.</div> -->
+            </div>
+          </div>
+ 			<br>
+  
+          <button type="submit" class="btn btn-outline-success" data-dismiss="modal" nbButton>Submit</button>
+        </form>   
+        </div>
+        <div class="col-sm-6" *ngIf="email_config">            
+                <form class="register-form" name="form" (ngSubmit)="form.form.valid && updateEmailSettings()" #form="ngForm" novalidate class="form">
+            <p class="col-sm-8">Configure Email Notification</p>
+          <div class="row">
+            <div class="col-sm-12">
+              
+              <div class="form-group" [ngClass]="{ 'has-error': form.submitted && !email.valid }">
+                  
+                <input type="text" nbInput fullWidth id="email" placeholder="Email Address" [(ngModel)]="model.email" name="email" #email="ngModel" required >
+              </div>
+              <div *ngIf="form.submitted && !email.valid" class="alert-warning">Email Address is required</div>
+            </div>
+ 			<br><br>
+             <div class="col-sm-12">
+              
+              <div class="form-group" [ngClass]="{ 'has-error': form.submitted && !password.valid }">
+                  
+                <input type="text" nbInput fullWidth id="password" placeholder="Password" [(ngModel)]="model.password" name="password" #password="ngModel" required >
+              </div>
+              <div *ngIf="form.submitted && !password.valid" class="alert-warning">Password is required</div>
+            </div>
+          </div>
+ 
+  
+          <button type="submit" class="btn btn-outline-success" data-dismiss="modal" nbButton>Update</button>
+        </form>
+    </div>
+</div>
+<br><br>
+		<div class="row" *ngIf="email_config">
+	<div class="col-sm-6">
+			  <form class="register-form" name="form" (ngSubmit)="email_form.form.valid && addNotifiEmail()" #email_form="ngForm" novalidate class="form">
+            <p class="col-sm-8">Email Notification</p>
+          <div class="row">
+            <div class="col-sm-12">
+              
+              <div class="form-group" [ngClass]="{ 'has-error': email_form.submitted && !email_id.valid }">
+                  
+                <input type="text" nbInput fullWidth id="email_id" placeholder="Email Address" [(ngModel)]="model.email_id" name="email_id" #email_id="ngModel" required >
+
+              </div>
+              <div *ngIf="email_form.submitted && !email_id.valid" class="alert-warning">Email Address is required</div>
+                 <br>
+                  <button type="submit" class="btn btn-outline-success" data-dismiss="modal" nbButton>ADD</button>
+            </div>
+
+           
+ 			
+          </div>
+ 
+  
+         
+        </form>
+         <br><br>
+    </div>
+    <br><br>
+        	<div class="col-sm-12">
+
+			 <ng2-smart-table [settings]="settings" [source]="source" (custom)="onCustomAction($event)">
+          </ng2-smart-table>
+      </div>
+			</div>
+        <br>
+       
+        </nb-card-body>
+    </nb-card>
+
+    

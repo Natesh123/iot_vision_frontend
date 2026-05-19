@@ -1,0 +1,158 @@
+@import '../../@theme/styles/themes';
+@import '~bootstrap/scss/mixins/breakpoints';
+@import '~@nebular/theme/styles/global/breakpoints';
+
+@include nb-install-component() {
+  .solar-card nb-card-header {
+    border: none;
+    padding-bottom: 0;
+  }
+
+  nb-card-body {
+    overflow: hidden;
+  }
+
+  .echart {
+    position: absolute;
+    left: 1em;
+    height: calc(100% - 2 * 1rem);
+    width: 40%;
+  }
+
+  .info {
+    margin-left: 45%;
+    padding-top: 1rem;
+  }
+
+  .value {
+    margin: 0;
+  }
+
+  .details {
+    color: nb-theme(text-hint-color);
+  }
+
+  @include media-breakpoint-down(sm) {
+    ngx-traffic {
+      display: none;
+    }
+  }
+
+  .cards-container {
+    display: flex;
+    flex-direction: row;
+    overflow: hidden;
+  }
+
+  .table-card,
+  .chart-card {
+    box-shadow: none;
+    margin-bottom: 0;
+    border-width: 0;
+  }
+
+  .table-card {
+    flex: 0 0 auto;
+  }
+
+  .chart-card {
+    flex: 1 0 auto;
+  }
+
+  .chart-card nb-card-header {
+    display: flex;
+    align-items: center;
+    padding-top: nb-theme(card-header-with-select-padding-top);
+    padding-bottom: nb-theme(card-header-with-select-padding-bottom);
+
+    // prevents double border from chart yAxisSplitLine
+    margin-bottom: -1px;
+  }
+
+  .type-select {
+    margin-left: auto;
+  }
+
+  .stats {
+    margin-right: 1rem;
+
+    > .caption {
+      display: block;
+    }
+  }
+
+  nb-tabset {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  nb-tab {
+    padding: 0;
+  }
+
+  nb-list-item {
+    display: flex;
+    align-items: baseline;
+
+    &:first-child {
+      border-top: none;
+    }
+  }
+
+  .month {
+    width: 2rem;
+  }
+
+  nb-icon.down {
+    color: nb-theme(color-danger-default);
+  }
+
+  nb-icon.up {
+    color: nb-theme(color-success-default);
+  }
+
+  .results {
+    margin-left: auto;
+  }
+
+  @include media-breakpoint-down(xl) {
+    .table-card {
+      display: none;
+    }
+  }
+}
+
+.icon-set{
+    font-size: 35px !important;
+    padding-right: 10px !important;
+}
+
+.no-underline{
+    text-decoration: none !important;
+}
+
+
+.float{
+	position:fixed;
+	width:60px;
+	height:60px;
+	bottom:40px;
+	right:40px;
+	background-color:#547df7;
+	color:#FFF;
+	border-radius:50px;
+	text-align:center;
+	box-shadow: 2px 2px 3px #999;
+}
+
+.my-float{
+	margin-top:22px;
+}
+
+.alert-warning{
+  color: #ff0000 !important;
+  margin-top: -1em !important;
+  margin-bottom: 3% !important;
+  background-color: #ffffff !important;
+}

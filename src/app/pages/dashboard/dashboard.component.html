@@ -1,0 +1,66 @@
+<div class="row">
+
+    <div class="col-xxxl-3 col-md-4">
+
+        <ngx-status-card title="Customers" type="info" (click)="navigation(1)">
+            <i class="nb-person"></i>
+          </ngx-status-card>
+
+    </div>
+
+    <div class="col-xxxl-3 col-md-4">
+
+        <ngx-status-card title="Assets" type="info" (click)="navigation(2)">
+            <i class="nb-home"></i>
+          </ngx-status-card>
+
+    </div>
+
+    <div class="col-xxxl-3 col-md-4">
+
+        <ngx-status-card title="Devices" type="info" (click)="navigation(3)">
+            <i class="nb-power"></i>
+          </ngx-status-card>
+
+    </div>
+
+</div>
+
+
+
+<div class="row">
+  <div class="col-xxxl-3 col-xxl-4 col-lg-5 col-md-6">
+    <ngx-solar [chartValue]="solarValue"></ngx-solar>
+   
+  </div>
+
+  <div class="col-xxxl-3 col-xxl-4 col-md-5">
+    
+    <ngx-traffic></ngx-traffic>
+   
+  </div>
+  <div class="col-xxxl-3 col-xxl-4 col-lg-5 col-md-6">
+      <ngx-weather></ngx-weather>
+     
+    </div>
+</div>
+
+<ng-template #dialog let-data let-ref="dialogRef">
+  <nb-card>
+    <nb-card-header>Activation Code</nb-card-header>
+    <nb-card-body>
+    <form class="register-form" name="form" (ngSubmit)="f.form.valid && activateAccount()" #f="ngForm" novalidate class="form">
+      <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !activationcode.valid }">
+        <label for="your_name"><i class="fa fa-key"></i></label>
+        <input type="text"  name="activationcode" [(ngModel)]="model.activationcode" #activationcode="ngModel" required placeholder="Your Activation Code"/>
+    </div>
+    <div *ngIf="f.submitted && !activationcode.valid" class="alert-warning">Activation Code is required</div>
+    <div class="" style="float: right">
+    <button type="submit" class="btn btn-outline-success">Submit</button>&nbsp;&nbsp;
+    <button class="btn btn-outline-danger" (click)="ref.close()">Cancel</button>
+  </div>
+    </form>
+    </nb-card-body>
+  </nb-card>
+</ng-template>
+

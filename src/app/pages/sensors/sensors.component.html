@@ -1,0 +1,1359 @@
+<div class="col-12 row" *ngIf="room_id == 1" style="padding:0px;">
+  <nb-tabset style="width:100%;">
+    <nb-tab tabTitle="All" class="nbtab">
+      <div class="col-12 row">
+        <div class="col-xxxl-2 col-xxl-2 col-lg-3 col-md-4 col-sm-6 tile-div"
+          *ngFor="let dash of dashData; let i = index">
+          <nb-card id="nbcard">
+
+            <nb-card-body class="card-body">
+              <div>
+                <a *ngIf="editstatus" href="javascript:void(0);" style="float:right"
+                  (click)="editdevicePopup(dash)"><nb-icon class="action-icon" nbTooltip="Edit Details"
+                    icon="options-2-outline" status="warning"></nb-icon></a>
+                <a href="javascript:void(0);" style="float: right; text-decoration: none"
+                  (click)="copyToClipboard(dash.device_id)"><nb-icon class="action-icon" nbTooltip="Copy Device link"
+                    icon="clipboard-outline" status="warning"></nb-icon>&nbsp;&nbsp;</a>
+                <nb-icon
+                  *ngIf="intConversion(dash.device_min_temp) > intConversion(dash.device_temp) || intConversion(dash.device_max_temp) < intConversion(dash.device_temp)
+                          || intConversion(dash.device_min_pressure) > intConversion(dash.device_pressure) || intConversion(dash.device_max_pressure) < intConversion(dash.device_pressure)
+                          || intConversion(dash.device_min_humidity) > intConversion(dash.device_humidity) || intConversion(dash.device_max_humidity) < intConversion(dash.device_humidity)"
+                  class="icon-set icon-alert icon-alert" icon="alert-triangle-outline" status="danger"></nb-icon>
+              </div>
+              <!-- Device Warning -->
+              <span class="h6 location" style="cursor: pointer;" (click)="sensorview(dash.device_id,dash.device_name)"
+                style="font-size: 1.0rem;">{{ dash.device_name }}
+
+              </span>
+              <span class="date">{{ dash.device_lastupdated | date:'dd-MM-yyyy hh:mm:ss a'}}</span>
+
+              <div class="weekly-forecast range-div" (click)="sensorview(dash.device_id)">
+                <div class="day">
+                  <span class="caption">Temp</span>
+
+                  <i *ngIf="dash.device_temp == 0.00" class="weather-icon fas fa-thermometer-half" status="danger"></i>
+
+                  <i *ngIf="intConversion(dash.device_min_temp) > intConversion(dash.device_temp) || intConversion(dash.device_max_temp) < intConversion(dash.device_temp)"
+                    class="weather-icon fas fa-thermometer-half warning-msg" status="danger"></i>
+
+                  <i *ngIf="intConversion(dash.device_min_temp) <= intConversion(dash.device_temp) && intConversion(dash.device_max_temp) > intConversion(dash.device_temp)"
+                    class="weather-icon fas fa-thermometer-half icon-color" status="danger"></i>
+
+                  <span class="temperature">{{ dash.device_temp | number:'2.1-1' }} &deg;</span>
+                </div>
+                <div class="day">
+                  <span class="caption">Pressure</span>
+
+                  <i *ngIf="dash.device_pressure == 0.00" class="weather-icon fas fa-wind" status="danger"></i>
+
+                  <i *ngIf="intConversion(dash.device_min_pressure) > intConversion(dash.device_pressure) || intConversion(dash.device_max_pressure) < intConversion(dash.device_pressure)"
+                    class="weather-icon fas fa-wind warning-msg" status="danger"></i>
+                  <i *ngIf="intConversion(dash.device_min_pressure) <= intConversion(dash.device_pressure) && intConversion(dash.device_max_pressure) > intConversion(dash.device_pressure)"
+                    class="weather-icon fas fa-wind icon-color" status="danger"></i>
+                  <span class="temperature">{{ dash.device_pressure | number:'2.1-2' }} Pa</span>
+                </div>
+                <div class="day">
+                  <span class="caption">Humidity</span>
+
+                  <i *ngIf="dash.device_pressure == 0.00" class="weather-icon fas fa-tint" status="danger"></i>
+
+                  <i *ngIf="intConversion(dash.device_min_humidity) > intConversion(dash.device_humidity) || intConversion(dash.device_max_humidity) < intConversion(dash.device_humidity)"
+                    class="weather-icon fas fa-tint warning-msg" status="danger"></i>
+                  <i *ngIf="intConversion(dash.device_min_humidity) <= intConversion(dash.device_humidity) && intConversion(dash.device_max_humidity) > intConversion(dash.device_humidity)"
+                    class="weather-icon fas fa-tint icon-color" status="danger"></i>
+                  <span class="temperature">{{ dash.device_humidity | number:'2.1-2' }} %</span>
+                </div>
+              </div>
+
+              <!-- <div class="today-details" style="cursor: pointer;" (click)="sensorview(dash.device_id)">
+                      <div class="parameter">
+                        <span class="caption parameter-name">min & max temp</span>
+                        <span *ngIf="dash.device_min_temp == 0 && dash.device_max_temp == 0" class="parameter-value">---</span>
+                        <span *ngIf="dash.device_min_temp != 0 && dash.device_max_temp != 0" class="parameter-value small-font">{{dash.device_min_temp}} &deg; - {{dash.device_max_temp}} &deg;</span>
+                      
+                      </div>
+                      <div class="parameter">
+                        <span class="caption parameter-name">min & max pre</span>
+                        <span *ngIf="dash.device_min_pressure == 0 && dash.device_max_pressure == 0" class="parameter-value">---</span>
+                        <span *ngIf="dash.device_min_pressure != 0 && dash.device_max_pressure != 0" class="parameter-value small-font">{{dash.device_min_pressure}} Pa - {{dash.device_max_pressure}} Pa</span>
+                      </div>
+                      <div class="parameter">
+                        <span class="caption parameter-name">min & max hum</span>
+                        <span *ngIf="dash.device_min_humidity == 0 && dash.device_max_humidity == 0" class="parameter-value">---</span>
+                        <span *ngIf="dash.device_min_humidity != 0 && dash.device_max_humidity != 0" class="parameter-value small-font">{{dash.device_min_humidity}} % - {{dash.device_max_humidity}} %</span>
+                      </div>
+                    </div>    -->
+
+            </nb-card-body>
+          </nb-card>
+
+        </div>
+      </div>
+    </nb-tab>
+    <nb-tab tabTitle="RM STORE" class="nbtab">
+      <div class="col-12 row">
+        <div class="col-xxxl-2 col-xxl-3 col-lg-4 col-md-5 col-sm-6 tile-div"
+          *ngFor="let rmdash of RMdashData; let i = index">
+          <nb-card id="nbcard">
+            <nb-card-body class="card-body">
+              <div>
+                <a *ngIf="editstatus" href="javascript:void(0);" style="float:right"
+                  (click)="editdevicePopup(rmdash)"><nb-icon class="action-icon" nbTooltip="Edit Details"
+                    icon="options-2-outline" status="warning"></nb-icon></a>
+                <a href="javascript:void(0);" style="float: right; text-decoration: none"
+                  (click)="copyToClipboard(rmdash.device_id)"><nb-icon class="action-icon" nbTooltip="Copy Device link"
+                    icon="clipboard-outline" status="warning"></nb-icon>&nbsp;&nbsp;</a>
+                <nb-icon
+                  *ngIf="intConversion(rmdash.device_min_temp) > intConversion(rmdash.device_temp) || intConversion(rmdash.device_max_temp) < intConversion(rmdash.device_temp)
+                              || intConversion(rmdash.device_min_pressure) > intConversion(rmdash.device_pressure) || intConversion(rmdash.device_max_pressure) < intConversion(rmdash.device_pressure)
+                              || intConversion(rmdash.device_min_humidity) > intConversion(rmdash.device_humidity) || intConversion(rmdash.device_max_humidity) < intConversion(rmdash.device_humidity)"
+                  class="icon-set icon-alert" icon="alert-triangle-outline" status="danger"></nb-icon>
+              </div>
+              <!-- Device Warning -->
+              <span class="h6 location">{{ rmdash.device_name }}
+
+              </span>
+              <span class="date">{{ rmdash.device_lastupdated | date:'dd-MM-yyyy hh:mm:ss a'}}</span>
+
+              <div class="weekly-forecast range-div">
+                <div class="day">
+                  <span class="caption">Temp</span>
+
+                  <i *ngIf="rmdash.device_temp == 0.00" class="weather-icon fas fa-tint" status="danger"></i>
+
+                  <i *ngIf="intConversion(rmdash.device_min_temp) > intConversion(rmdash.device_temp) || intConversion(rmdash.device_max_temp) < intConversion(rmdash.device_temp)"
+                    class="weather-icon fas fa-thermometer-half warning-msg" status="danger"></i>
+
+                  <i *ngIf="intConversion(rmdash.device_min_temp) <= intConversion(rmdash.device_temp) && intConversion(rmdash.device_max_temp) > intConversion(rmdash.device_temp)"
+                    class="weather-icon fas fa-thermometer-half icon-color" status="danger"></i>
+
+                  <span class="temperature">{{ rmdash.device_temp | number:'2.1-1' }} &deg;</span>
+                </div>
+                <div class="day">
+                  <span class="caption">Pressure</span>
+
+                  <i *ngIf="rmdash.device_pressure == 0.00" class="weather-icon fas fa-wind" status="danger"></i>
+
+                  <i *ngIf="intConversion(rmdash.device_min_pressure) > intConversion(rmdash.device_pressure) || intConversion(rmdash.device_max_pressure) < intConversion(rmdash.device_pressure)"
+                    class="weather-icon fas fa-wind warning-msg" status="danger"></i>
+                  <i *ngIf="intConversion(rmdash.device_min_pressure) <= intConversion(rmdash.device_pressure) && intConversion(rmdash.device_max_pressure) > intConversion(rmdash.device_pressure)"
+                    class="weather-icon fas fa-wind icon-color" status="danger"></i>
+                  <span class="temperature">{{ rmdash.device_pressure | number:'2.1-2' }} Pa</span>
+                </div>
+                <div class="day">
+                  <span class="caption">Humidity</span>
+
+                  <i *ngIf="rmdash.device_humidity == 0.00" class="weather-icon fas fa-tint" status="danger"></i>
+
+                  <i *ngIf="intConversion(rmdash.device_min_humidity) > intConversion(rmdash.device_humidity) || intConversion(rmdash.device_max_humidity) < intConversion(rmdash.device_humidity)"
+                    class="weather-icon fas fa-tint warning-msg" status="danger"></i>
+                  <i *ngIf="intConversion(rmdash.device_min_humidity) <= intConversion(rmdash.device_humidity) && intConversion(rmdash.device_max_humidity) > intConversion(rmdash.device_humidity)"
+                    class="weather-icon fas fa-tint icon-color" status="danger"></i>
+                  <span class="temperature">{{ rmdash.device_humidity | number:'2.1-2' }} %</span>
+                </div>
+                <!--  <div class="day" *ngIf="rmdash.device_id != 7">
+                            <span class="caption">Pressure Diff</span>
+                            <i *ngIf="intConversion(rmdash.device_min_pressure) > intConversion(rmdash.device_pressure) || intConversion(rmdash.device_max_pressure) < intConversion(rmdash.device_pressure)"
+                              class="weather-icon fas fa-wind warning-msg" status="danger"></i>
+                            <i *ngIf="intConversion(rmdash.device_min_pressure) < intConversion(rmdash.device_pressure) && intConversion(rmdash.device_max_pressure) > intConversion(rmdash.device_pressure)"
+                               class="weather-icon fas fa-wind icon-color" status="danger"></i>
+                            <span class="temperature">{{ pressureDiff[i] | number:'2.1-2' }} Pa</span>
+                          </div> -->
+              </div>
+
+              <!-- <div class="today-details">
+                          <div class="parameter">
+                            <span class="caption parameter-name">min & max temp</span>
+                            <span *ngIf="rmdash.device_min_temp == 0 && rmdash.device_max_temp == 0" class="parameter-value">---</span>
+                            <span *ngIf="rmdash.device_min_temp != 0 && rmdash.device_max_temp != 0" class="parameter-value small-font">{{rmdash.device_min_temp}} &deg; - {{rmdash.device_max_temp}} &deg;</span>
+                          
+                          </div>
+                          <div class="parameter">
+                            <span class="caption parameter-name">min & max pre</span>
+                            <span *ngIf="rmdash.device_min_pressure == 0 && rmdash.device_max_pressure == 0" class="parameter-value">---</span>
+                            <span *ngIf="rmdash.device_min_pressure != 0 && rmdash.device_max_pressure != 0" class="parameter-value small-font">{{rmdash.device_min_pressure}} Pa - {{rmdash.device_max_pressure}} Pa</span>
+                          </div>
+                          <div class="parameter">
+                            <span class="caption parameter-name">min & max hum</span>
+                            <span *ngIf="rmdash.device_min_humidity == 0 && rmdash.device_max_humidity == 0" class="parameter-value">---</span>
+                            <span *ngIf="rmdash.device_min_humidity != 0 && rmdash.device_max_humidity != 0" class="parameter-value small-font">{{rmdash.device_min_humidity}} % - {{rmdash.device_max_humidity}} %</span>
+                          </div>
+                        </div>    -->
+
+            </nb-card-body>
+          </nb-card>
+
+        </div>
+      </div>
+    </nb-tab>
+
+    <nb-tab tabTitle="GOODS STORE" class="nbtab">
+      <div class="col-12 row">
+        <div class="col-xxxl-2 col-xxl-3 col-lg-4 col-md-5 col-sm-6 tile-div"
+          *ngFor="let Gsdash of GoodStoredashData; let i = index">
+          <nb-card id="nbcard">
+            <nb-card-body class="card-body">
+              <div>
+                <a *ngIf="editstatus" href="javascript:void(0);" style="float:right"
+                  (click)="editdevicePopup(Gsdash)"><nb-icon class="action-icon" nbTooltip="Edit Details"
+                    icon="options-2-outline" status="warning"></nb-icon></a>
+                <a href="javascript:void(0);" style="float: right; text-decoration: none"
+                  (click)="copyToClipboard(Gsdash.device_id)"><nb-icon class="action-icon" nbTooltip="Copy Device link"
+                    icon="clipboard-outline" status="warning"></nb-icon>&nbsp;&nbsp;</a>
+                <nb-icon
+                  *ngIf="intConversion(Gsdash.device_min_temp) > intConversion(Gsdash.device_temp) || intConversion(Gsdash.device_max_temp) < intConversion(Gsdash.device_temp)
+                              || intConversion(Gsdash.device_min_pressure) > intConversion(Gsdash.device_pressure) || intConversion(Gsdash.device_max_pressure) < intConversion(Gsdash.device_pressure)
+                              || intConversion(Gsdash.device_min_humidity) > intConversion(Gsdash.device_humidity) || intConversion(Gsdash.device_max_humidity) < intConversion(Gsdash.device_humidity)"
+                  class="icon-set icon-alert" icon="alert-triangle-outline" status="danger"></nb-icon>
+              </div>
+              <!-- Device Warning -->
+              <span class="h6 location">{{ Gsdash.device_name }}
+
+              </span>
+              <span class="date">{{ Gsdash.device_lastupdated | date:'dd-MM-yyyy hh:mm:ss a'}}</span>
+
+              <div class="weekly-forecast range-div">
+                <div class="day">
+                  <span class="caption">Temp</span>
+
+                  <i *ngIf="Gsdash.device_temp == 0.00" class="weather-icon fas fa-thermometer-half"
+                    status="danger"></i>
+
+
+                  <i *ngIf="intConversion(Gsdash.device_min_temp) > intConversion(Gsdash.device_temp) || intConversion(Gsdash.device_max_temp) < intConversion(Gsdash.device_temp)"
+                    class="weather-icon fas fa-thermometer-half warning-msg" status="danger"></i>
+
+                  <i *ngIf="intConversion(Gsdash.device_min_temp) <= intConversion(Gsdash.device_temp) && intConversion(Gsdash.device_max_temp) > intConversion(Gsdash.device_temp)"
+                    class="weather-icon fas fa-thermometer-half icon-color" status="danger"></i>
+
+                  <span class="temperature">{{ Gsdash.device_temp | number:'2.1-1' }} &deg;</span>
+                </div>
+                <div class="day">
+                  <span class="caption">Pressure</span>
+
+                  <i *ngIf="Gsdash.device_pressure == 0.00" class="weather-icon fas fa-wind" status="danger"></i>
+
+                  <i *ngIf="intConversion(Gsdash.device_min_pressure) > intConversion(Gsdash.device_pressure) || intConversion(Gsdash.device_max_pressure) < intConversion(Gsdash.device_pressure)"
+                    class="weather-icon fas fa-wind warning-msg" status="danger"></i>
+                  <i *ngIf="intConversion(Gsdash.device_min_pressure) <= intConversion(Gsdash.device_pressure) && intConversion(Gsdash.device_max_pressure) > intConversion(Gsdash.device_pressure)"
+                    class="weather-icon fas fa-wind icon-color" status="danger"></i>
+                  <span class="temperature">{{ Gsdash.device_pressure | number:'2.1-2' }} Pa</span>
+                </div>
+                <div class="day">
+                  <span class="caption">Humidity</span>
+
+                  <i *ngIf="Gsdash.device_humidity == 0.00" class="weather-icon fas fa-tint" status="danger"></i>
+
+                  <i *ngIf="intConversion(Gsdash.device_min_humidity) > intConversion(Gsdash.device_humidity) || intConversion(Gsdash.device_max_humidity) < intConversion(Gsdash.device_humidity)"
+                    class="weather-icon fas fa-tint warning-msg" status="danger"></i>
+                  <i *ngIf="intConversion(Gsdash.device_min_humidity) <= intConversion(Gsdash.device_humidity) && intConversion(Gsdash.device_max_humidity) > intConversion(Gsdash.device_humidity)"
+                    class="weather-icon fas fa-tint icon-color" status="danger"></i>
+                  <span class="temperature">{{ Gsdash.device_humidity | number:'2.1-2' }} %</span>
+                </div>
+              </div>
+
+              <!-- <div class="today-details">
+                          <div class="parameter">
+                            <span class="caption parameter-name">min & max temp</span>
+                            <span *ngIf="Gsdash.device_min_temp == 0 && Gsdash.device_max_temp == 0" class="parameter-value">---</span>
+                            <span *ngIf="Gsdash.device_min_temp != 0 && Gsdash.device_max_temp != 0" class="parameter-value small-font">{{Gsdash.device_min_temp}} &deg; - {{Gsdash.device_max_temp}} &deg;</span>
+                          
+                          </div>
+                          <div class="parameter">
+                            <span class="caption parameter-name">min & max pre</span>
+                            <span *ngIf="Gsdash.device_min_pressure == 0 && Gsdash.device_max_pressure == 0" class="parameter-value">---</span>
+                            <span *ngIf="Gsdash.device_min_pressure != 0 && Gsdash.device_max_pressure != 0" class="parameter-value small-font">{{Gsdash.device_min_pressure}} Pa - {{Gsdash.device_max_pressure}} Pa</span>
+                          </div>
+                          <div class="parameter">
+                            <span class="caption parameter-name">min & max hum</span>
+                            <span *ngIf="Gsdash.device_min_humidity == 0 && Gsdash.device_max_humidity == 0" class="parameter-value">---</span>
+                            <span *ngIf="Gsdash.device_min_humidity != 0 && Gsdash.device_max_humidity != 0" class="parameter-value small-font">{{Gsdash.device_min_humidity}} % - {{Gsdash.device_max_humidity}} %</span>
+                          </div>
+                        </div>    -->
+
+            </nb-card-body>
+          </nb-card>
+
+        </div>
+      </div>
+    </nb-tab>
+    <nb-tab tabTitle="LIQUID" class="nbtab">
+      <div class="col-12 row">
+        <div class="col-xxxl-2 col-xxl-3 col-lg-4 col-md-5 col-sm-6 tile-div"
+          *ngFor="let lqdash of LiquiddashData; let i = index">
+          <nb-card id="nbcard">
+            <nb-card-body class="card-body">
+              <div>
+                <a *ngIf="editstatus" href="javascript:void(0);" style="float:right"
+                  (click)="editdevicePopup(lqdash)"><nb-icon class="action-icon" nbTooltip="Edit Details"
+                    icon="options-2-outline" status="warning"></nb-icon></a>
+                <a href="javascript:void(0);" style="float: right; text-decoration: none"
+                  (click)="copyToClipboard(lqdash.device_id)"><nb-icon class="action-icon" nbTooltip="Copy Device link"
+                    icon="clipboard-outline" status="warning"></nb-icon>&nbsp;&nbsp;</a>
+                <nb-icon
+                  *ngIf="intConversion(lqdash.device_min_temp) > intConversion(lqdash.device_temp) || intConversion(lqdash.device_max_temp) < intConversion(lqdash.device_temp)
+                              || intConversion(lqdash.device_min_pressure) > intConversion(lqdash.device_pressure) || intConversion(lqdash.device_max_pressure) < intConversion(lqdash.device_pressure)
+                              || intConversion(lqdash.device_min_humidity) > intConversion(lqdash.device_humidity) || intConversion(lqdash.device_max_humidity) < intConversion(lqdash.device_humidity)"
+                  class="icon-set icon-alert" icon="alert-triangle-outline" status="danger"></nb-icon>
+              </div>
+              <!-- Device Warning -->
+              <span class="h6 location">{{ lqdash.device_name }}
+
+              </span>
+              <span class="date">{{ lqdash.device_lastupdated | date:'dd-MM-yyyy hh:mm:ss a'}}</span>
+
+              <div class="weekly-forecast range-div">
+                <div class="day">
+                  <span class="caption">Temp</span>
+
+                  <i *ngIf="lqdash.device_temp == 0.00" class="weather-icon fas fa-thermometer-half"
+                    status="danger"></i>
+
+                  <i *ngIf="intConversion(lqdash.device_min_temp) > intConversion(lqdash.device_temp) || intConversion(lqdash.device_max_temp) < intConversion(lqdash.device_temp)"
+                    class="weather-icon fas fa-thermometer-half warning-msg" status="danger"></i>
+
+                  <i *ngIf="intConversion(lqdash.device_min_temp) <= intConversion(lqdash.device_temp) && intConversion(lqdash.device_max_temp) > intConversion(lqdash.device_temp)"
+                    class="weather-icon fas fa-thermometer-half icon-color" status="danger"></i>
+
+                  <span class="temperature">{{ lqdash.device_temp | number:'2.1-1' }} &deg;</span>
+                </div>
+                <div class="day">
+                  <span class="caption">Pressure</span>
+
+                  <i *ngIf="lqdash.device_pressure == 0.00" class="weather-icon fas fa-wind" status="danger"></i>
+
+                  <i *ngIf="intConversion(lqdash.device_min_pressure) > intConversion(lqdash.device_pressure) || intConversion(lqdash.device_max_pressure) < intConversion(lqdash.device_pressure)"
+                    class="weather-icon fas fa-wind warning-msg" status="danger"></i>
+                  <i *ngIf="intConversion(lqdash.device_min_pressure) <= intConversion(lqdash.device_pressure) && intConversion(lqdash.device_max_pressure) > intConversion(lqdash.device_pressure)"
+                    class="weather-icon fas fa-wind icon-color" status="danger"></i>
+                  <span class="temperature">{{ lqdash.device_pressure | number:'2.1-2' }} Pa</span>
+                </div>
+                <div class="day">
+                  <span class="caption">Humidity</span>
+
+                  <i *ngIf="lqdash.device_humidity == 0.00" class="weather-icon fas fa-tint" status="danger"></i>
+
+                  <i *ngIf="intConversion(lqdash.device_min_humidity) > intConversion(lqdash.device_humidity) || intConversion(lqdash.device_max_humidity) < intConversion(lqdash.device_humidity)"
+                    class="weather-icon fas fa-tint warning-msg" status="danger"></i>
+                  <i *ngIf="intConversion(lqdash.device_min_humidity) <= intConversion(lqdash.device_humidity) && intConversion(lqdash.device_max_humidity) > intConversion(lqdash.device_humidity)"
+                    class="weather-icon fas fa-tint icon-color" status="danger"></i>
+                  <span class="temperature">{{ lqdash.device_humidity | number:'2.1-2' }} %</span>
+                </div>
+                <!--   <div class="day" *ngIf="lqdash.device_id != 17">
+                            <span class="caption">Pressure Diff</span>
+                            <i *ngIf="intConversion(lqdash.device_min_pressure) > intConversion(lqdash.device_pressure) || intConversion(lqdash.device_max_pressure) < intConversion(lqdash.device_pressure)"
+                              class="weather-icon fas fa-wind warning-msg" status="danger"></i>
+                            <i *ngIf="intConversion(lqdash.device_min_pressure) < intConversion(lqdash.device_pressure) && intConversion(lqdash.device_max_pressure) > intConversion(lqdash.device_pressure)"
+                               class="weather-icon fas fa-wind icon-color" status="danger"></i>
+                            <span class="temperature">{{ LiquidpressureDiff[i] | number:'2.1-2' }} Pa</span>
+                          </div> -->
+              </div>
+
+              <!-- <div class="today-details">
+                          <div class="parameter">
+                            <span class="caption parameter-name">min & max temp</span>
+                            <span *ngIf="lqdash.device_min_temp == 0 && lqdash.device_max_temp == 0" class="parameter-value">---</span>
+                            <span *ngIf="lqdash.device_min_temp != 0 && lqdash.device_max_temp != 0" class="parameter-value small-font">{{lqdash.device_min_temp}} &deg; - {{lqdash.device_max_temp}} &deg;</span>
+                          
+                          </div>
+                          <div class="parameter">
+                            <span class="caption parameter-name">min & max pre</span>
+                            <span *ngIf="lqdash.device_min_pressure == 0 && lqdash.device_max_pressure == 0" class="parameter-value">---</span>
+                            <span *ngIf="lqdash.device_min_pressure != 0 && lqdash.device_max_pressure != 0" class="parameter-value small-font">{{lqdash.device_min_pressure}} Pa - {{lqdash.device_max_pressure}} Pa</span>
+                          </div>
+                          <div class="parameter">
+                            <span class="caption parameter-name">min & max hum</span>
+                            <span *ngIf="lqdash.device_min_humidity == 0 && lqdash.device_max_humidity == 0" class="parameter-value">---</span>
+                            <span *ngIf="lqdash.device_min_humidity != 0 && lqdash.device_max_humidity != 0" class="parameter-value small-font">{{lqdash.device_min_humidity}} % - {{lqdash.device_max_humidity}} %</span>
+                          </div>
+                        </div>    -->
+
+            </nb-card-body>
+          </nb-card>
+
+        </div>
+      </div>
+    </nb-tab>
+    <nb-tab tabTitle="OINTMENT" class="nbtab">
+      <div class="col-12 row">
+        <div class="col-xxxl-2 col-xxl-3 col-lg-4 col-md-5 col-sm-6 tile-div"
+          *ngFor="let oindash of OinmnetdashData; let i = index">
+          <nb-card id="nbcard">
+            <nb-card-body class="card-body">
+              <div>
+                <a *ngIf="editstatus" href="javascript:void(0);" style="float:right"
+                  (click)="editdevicePopup(oindash)"><nb-icon class="action-icon" nbTooltip="Edit Details"
+                    icon="options-2-outline" status="warning"></nb-icon></a>
+                <a href="javascript:void(0);" style="float: right; text-decoration: none"
+                  (click)="copyToClipboard(oindash.device_id)"><nb-icon class="action-icon" nbTooltip="Copy Device link"
+                    icon="clipboard-outline" status="warning"></nb-icon>&nbsp;&nbsp;</a>
+                <nb-icon
+                  *ngIf="intConversion(oindash.device_min_temp) > intConversion(oindash.device_temp) || intConversion(oindash.device_max_temp) < intConversion(oindash.device_temp)
+                              || intConversion(oindash.device_min_pressure) > intConversion(oindash.device_pressure) || intConversion(oindash.device_max_pressure) < intConversion(oindash.device_pressure)
+                              || intConversion(oindash.device_min_humidity) > intConversion(oindash.device_humidity) || intConversion(oindash.device_max_humidity) < intConversion(oindash.device_humidity)"
+                  class="icon-set icon-alert" icon="alert-triangle-outline" status="danger"></nb-icon>
+              </div>
+              <!-- Device Warning -->
+              <span class="h6 location">{{ oindash.device_name }}
+
+              </span>
+              <span class="date">{{ oindash.device_lastupdated | date:'dd-MM-yyyy hh:mm:ss a'}}</span>
+
+              <div class="weekly-forecast range-div">
+                <div class="day">
+                  <span class="caption">Temp</span>
+
+                  <i *ngIf="oindash.device_temp == 0.00" class="weather-icon fas fa-thermometer-half"
+                    status="danger"></i>
+
+                  <i *ngIf="intConversion(oindash.device_min_temp) > intConversion(oindash.device_temp) || intConversion(oindash.device_max_temp) < intConversion(oindash.device_temp)"
+                    class="weather-icon fas fa-thermometer-half warning-msg" status="danger"></i>
+
+                  <i *ngIf="intConversion(oindash.device_min_temp) <= intConversion(oindash.device_temp) && intConversion(oindash.device_max_temp) > intConversion(oindash.device_temp)"
+                    class="weather-icon fas fa-thermometer-half icon-color" status="danger"></i>
+
+                  <span class="temperature">{{ oindash.device_temp | number:'2.1-1' }} &deg;</span>
+                </div>
+                <div class="day">
+                  <span class="caption">Pressure</span>
+
+                  <i *ngIf="oindash.device_pressure == 0.00" class="weather-icon fas fa-wind" status="danger"></i>
+
+                  <i *ngIf="intConversion(oindash.device_min_pressure) > intConversion(oindash.device_pressure) || intConversion(oindash.device_max_pressure) < intConversion(oindash.device_pressure)"
+                    class="weather-icon fas fa-wind warning-msg" status="danger"></i>
+                  <i *ngIf="intConversion(oindash.device_min_pressure) <= intConversion(oindash.device_pressure) && intConversion(oindash.device_max_pressure) > intConversion(oindash.device_pressure)"
+                    class="weather-icon fas fa-wind icon-color" status="danger"></i>
+                  <span class="temperature">{{ oindash.device_pressure | number:'2.1-2' }} Pa</span>
+                </div>
+                <div class="day">
+                  <span class="caption">Humidity</span>
+
+                  <i *ngIf="oindash.device_humidity == 0.00" class="weather-icon fas fa-tint" status="danger"></i>
+
+                  <i *ngIf="intConversion(oindash.device_min_humidity) > intConversion(oindash.device_humidity) || intConversion(oindash.device_max_humidity) < intConversion(oindash.device_humidity)"
+                    class="weather-icon fas fa-tint warning-msg" status="danger"></i>
+                  <i *ngIf="intConversion(oindash.device_min_humidity) <= intConversion(oindash.device_humidity) && intConversion(oindash.device_max_humidity) > intConversion(oindash.device_humidity)"
+                    class="weather-icon fas fa-tint icon-color" status="danger"></i>
+                  <span class="temperature">{{ oindash.device_humidity | number:'2.1-2' }} %</span>
+                </div>
+                <!--   <div class="day" *ngIf="oindash.device_id != 20">
+                            <span class="caption">Pressure Diff</span>
+                            <i *ngIf="intConversion(oindash.device_min_humidity) > intConversion(oindash.device_humidity) || intConversion(oindash.device_max_humidity) < intConversion(oindash.device_humidity)"
+                              class="weather-icon fas fa-tint warning-msg" status="danger"></i>
+                            <i *ngIf="intConversion(oindash.device_min_humidity) < intConversion(oindash.device_humidity) && intConversion(oindash.device_max_humidity) > intConversion(oindash.device_humidity)"
+                               class="weather-icon fas fa-tint icon-color" status="danger"></i>
+                            <span class="temperature">{{ OinmnetpressureDiff[i] | number:'2.1-2' }} Pa</span>
+                          </div> -->
+              </div>
+
+              <!-- <div class="today-details">
+                          <div class="parameter">
+                            <span class="caption parameter-name">min & max temp</span>
+                            <span *ngIf="oindash.device_min_temp == 0 && oindash.device_max_temp == 0" class="parameter-value">---</span>
+                            <span *ngIf="oindash.device_min_temp != 0 && oindash.device_max_temp != 0" class="parameter-value small-font">{{oindash.device_min_temp}} &deg; - {{oindash.device_max_temp}} &deg;</span>
+                          
+                          </div>
+                          <div class="parameter">
+                            <span class="caption parameter-name">min & max pre</span>
+                            <span *ngIf="oindash.device_min_pressure == 0 && oindash.device_max_pressure == 0" class="parameter-value">---</span>
+                            <span *ngIf="oindash.device_min_pressure != 0 && oindash.device_max_pressure != 0" class="parameter-value small-font">{{oindash.device_min_pressure}} Pa - {{oindash.device_max_pressure}} Pa</span>
+                          </div>
+                          <div class="parameter">
+                            <span class="caption parameter-name">min & max hum</span>
+                            <span *ngIf="oindash.device_min_humidity == 0 && oindash.device_max_humidity == 0" class="parameter-value">---</span>
+                            <span *ngIf="oindash.device_min_humidity != 0 && oindash.device_max_humidity != 0" class="parameter-value small-font">{{oindash.device_min_humidity}} % - {{oindash.device_max_humidity}} %</span>
+                          </div>
+                        </div>    -->
+
+            </nb-card-body>
+          </nb-card>
+
+        </div>
+      </div>
+    </nb-tab>
+    <nb-tab tabTitle="TABLET AREA" class="nbtab">
+      <div class="col-12 row">
+        <div class="col-xxxl-2 col-xxl-3 col-lg-4 col-md-5 col-sm-6 tile-div"
+          *ngFor="let tabdash of TabAreadashData; let i = index">
+          <nb-card id="nbcard">
+            <nb-card-body class="card-body">
+              <div>
+                <a *ngIf="editstatus" href="javascript:void(0);" style="float:right"
+                  (click)="editdevicePopup(tabdash)"><nb-icon class="action-icon" nbTooltip="Edit Details"
+                    icon="options-2-outline" status="warning"></nb-icon></a>
+                <a href="javascript:void(0);" style="float: right; text-decoration: none"
+                  (click)="copyToClipboard(tabdash.device_id)"><nb-icon class="action-icon" nbTooltip="Copy Device link"
+                    icon="clipboard-outline" status="warning"></nb-icon>&nbsp;&nbsp;</a>
+                <nb-icon
+                  *ngIf="intConversion(tabdash.device_min_temp) > intConversion(tabdash.device_temp) || intConversion(tabdash.device_max_temp) < intConversion(tabdash.device_temp)
+                              || intConversion(tabdash.device_min_pressure) > intConversion(tabdash.device_pressure) || intConversion(tabdash.device_max_pressure) < intConversion(tabdash.device_pressure)
+                              || intConversion(tabdash.device_min_humidity) > intConversion(tabdash.device_humidity) || intConversion(tabdash.device_max_humidity) < intConversion(tabdash.device_humidity)"
+                  class="icon-set icon-alert" icon="alert-triangle-outline" status="danger"></nb-icon>
+              </div>
+              <!-- Device Warning -->
+              <span class="h6 location">{{ tabdash.device_name }}
+
+              </span>
+              <span class="date">{{ tabdash.device_lastupdated | date:'dd-MM-yyyy hh:mm:ss a'}}</span>
+
+              <div class="weekly-forecast range-div">
+                <div class="day">
+                  <span class="caption">Temp</span>
+
+                  <i *ngIf="tabdash.device_temp == 0.00" class="weather-icon fas fa-thermometer-half "
+                    status="danger"></i>
+
+                  <i *ngIf="intConversion(tabdash.device_min_temp) > intConversion(tabdash.device_temp) || intConversion(tabdash.device_max_temp) < intConversion(tabdash.device_temp)"
+                    class="weather-icon fas fa-thermometer-half warning-msg" status="danger"></i>
+
+                  <i *ngIf="intConversion(tabdash.device_min_temp) <= intConversion(tabdash.device_temp) && intConversion(tabdash.device_max_temp) > intConversion(tabdash.device_temp)"
+                    class="weather-icon fas fa-thermometer-half icon-color" status="danger"></i>
+
+                  <span class="temperature">{{ tabdash.device_temp | number:'2.1-1' }} &deg;</span>
+                </div>
+                <div class="day">
+                  <span class="caption">Pressure</span>
+
+                  <i *ngIf="tabdash.device_pressure == 0.00" class="weather-icon fas fa-wind " status="danger"></i>
+
+                  <i *ngIf="intConversion(tabdash.device_min_pressure) > intConversion(tabdash.device_pressure) || intConversion(tabdash.device_max_pressure) < intConversion(tabdash.device_pressure)"
+                    class="weather-icon fas fa-wind warning-msg" status="danger"></i>
+                  <i *ngIf="intConversion(tabdash.device_min_pressure) <= intConversion(tabdash.device_pressure) && intConversion(tabdash.device_max_pressure) > intConversion(tabdash.device_pressure)"
+                    class="weather-icon fas fa-wind icon-color" status="danger"></i>
+                  <span class="temperature">{{ tabdash.device_pressure | number:'2.1-2' }} Pa</span>
+                </div>
+                <div class="day">
+                  <span class="caption">Humidity</span>
+
+                  <i *ngIf="tabdash.device_humidity == 0.00" class="weather-icon fas fa-tint " status="danger"></i>
+
+                  <i *ngIf="intConversion(tabdash.device_min_humidity) > intConversion(tabdash.device_humidity) || intConversion(tabdash.device_max_humidity) < intConversion(tabdash.device_humidity)"
+                    class="weather-icon fas fa-tint warning-msg" status="danger"></i>
+                  <i *ngIf="intConversion(tabdash.device_min_humidity) <= intConversion(tabdash.device_humidity) && intConversion(tabdash.device_max_humidity) > intConversion(tabdash.device_humidity)"
+                    class="weather-icon fas fa-tint icon-color" status="danger"></i>
+                  <span class="temperature">{{ tabdash.device_humidity | number:'2.1-2' }} %</span>
+                </div>
+                <!--    <div class="day" *ngIf="tabdash.device_id != 21">
+                            <span class="caption">Pressure Diff</span>
+                            <i *ngIf="intConversion(tabdash.device_min_pressure) > intConversion(tabdash.device_pressure) || intConversion(tabdash.device_max_pressure) < intConversion(tabdash.device_pressure)"
+                              class="weather-icon fas fa-wind warning-msg" status="danger"></i>
+                            <i *ngIf="intConversion(tabdash.device_min_pressure) < intConversion(tabdash.device_pressure) && intConversion(tabdash.device_max_pressure) > intConversion(tabdash.device_pressure)"
+                               class="weather-icon fas fa-wind icon-color" status="danger"></i>
+                            <span class="temperature">{{ TabAreapressureDiff[i] | number:'2.1-2' }} Pa</span>
+                          </div> -->
+              </div>
+
+              <!-- <div class="today-details">
+                          <div class="parameter">
+                            <span class="caption parameter-name">min & max temp</span>
+                            <span *ngIf="tabdash.device_min_temp == 0 && tabdash.device_max_temp == 0" class="parameter-value">---</span>
+                            <span *ngIf="tabdash.device_min_temp != 0 && tabdash.device_max_temp != 0" class="parameter-value small-font">{{tabdash.device_min_temp}} &deg; - {{tabdash.device_max_temp}} &deg;</span>
+                          
+                          </div>
+                          <div class="parameter">
+                            <span class="caption parameter-name">min & max pre</span>
+                            <span *ngIf="tabdash.device_min_pressure == 0 && tabdash.device_max_pressure == 0" class="parameter-value">---</span>
+                            <span *ngIf="tabdash.device_min_pressure != 0 && tabdash.device_max_pressure != 0" class="parameter-value small-font">{{tabdash.device_min_pressure}} Pa - {{tabdash.device_max_pressure}} Pa</span>
+                          </div>
+                          <div class="parameter">
+                            <span class="caption parameter-name">min & max hum</span>
+                            <span *ngIf="tabdash.device_min_humidity == 0 && tabdash.device_max_humidity == 0" class="parameter-value">---</span>
+                            <span *ngIf="tabdash.device_min_humidity != 0 && tabdash.device_max_humidity != 0" class="parameter-value small-font">{{tabdash.device_min_humidity}} % - {{tabdash.device_max_humidity}} %</span>
+                          </div>
+                        </div>    -->
+
+            </nb-card-body>
+          </nb-card>
+
+        </div>
+      </div>
+    </nb-tab>
+    <nb-tab tabTitle="PACKING" class="nbtab">
+      <div class="col-12 row">
+        <div class="col-xxxl-2 col-xxl-3 col-lg-4 col-md-5 col-sm-6 tile-div"
+          *ngFor="let packdash of PackingdashData; let i = index">
+          <nb-card id="nbcard">
+            <nb-card-body class="card-body">
+              <div>
+                <a *ngIf="editstatus" href="javascript:void(0);" style="float:right"
+                  (click)="editdevicePopup(packdash)"><nb-icon class="action-icon" nbTooltip="Edit Details"
+                    icon="options-2-outline" status="warning"></nb-icon></a>
+                <a href="javascript:void(0);" style="float: right; text-decoration: none"
+                  (click)="copyToClipboard(packdash.device_id)"><nb-icon class="action-icon"
+                    nbTooltip="Copy Device link" icon="clipboard-outline" status="warning"></nb-icon>&nbsp;&nbsp;</a>
+                <nb-icon
+                  *ngIf="intConversion(packdash.device_min_temp) > intConversion(packdash.device_temp) || intConversion(packdash.device_max_temp) < intConversion(packdash.device_temp)
+                              || intConversion(packdash.device_min_pressure) > intConversion(packdash.device_pressure) || intConversion(packdash.device_max_pressure) < intConversion(packdash.device_pressure)
+                              || intConversion(packdash.device_min_humidity) > intConversion(packdash.device_humidity) || intConversion(packdash.device_max_humidity) < intConversion(packdash.device_humidity)"
+                  class="icon-set icon-alert" icon="alert-triangle-outline" status="danger"></nb-icon>
+              </div>
+              <!-- Device Warning -->
+              <span class="h6 location">{{ packdash.device_name }}
+
+              </span>
+              <span class="date">{{ packdash.device_lastupdated | date:'dd-MM-yyyy hh:mm:ss a'}}</span>
+
+              <div class="weekly-forecast range-div">
+                <div class="day">
+                  <span class="caption">Temp</span>
+
+                  <i *ngIf="packdash.device_temp == 0.00" class="weather-icon fas fa-thermometer-half "
+                    status="danger"></i>
+
+                  <i *ngIf="intConversion(packdash.device_min_temp) > intConversion(packdash.device_temp) || intConversion(packdash.device_max_temp) < intConversion(packdash.device_temp)"
+                    class="weather-icon fas fa-thermometer-half warning-msg" status="danger"></i>
+
+                  <i *ngIf="intConversion(packdash.device_min_temp) <= intConversion(packdash.device_temp) && intConversion(packdash.device_max_temp) > intConversion(packdash.device_temp)"
+                    class="weather-icon fas fa-thermometer-half icon-color" status="danger"></i>
+
+                  <span class="temperature">{{ packdash.device_temp | number:'2.1-1' }} &deg;</span>
+                </div>
+                <div class="day">
+                  <span class="caption">Pressure</span>
+
+                  <i *ngIf="packdash.device_pressure == 0.00" class="weather-icon fas fa-wind " status="danger"></i>
+
+                  <i *ngIf="intConversion(packdash.device_min_pressure) > intConversion(packdash.device_pressure) || intConversion(packdash.device_max_pressure) < intConversion(packdash.device_pressure)"
+                    class="weather-icon fas fa-wind warning-msg" status="danger"></i>
+                  <i *ngIf="intConversion(packdash.device_min_pressure) <= intConversion(packdash.device_pressure) && intConversion(packdash.device_max_pressure) > intConversion(packdash.device_pressure)"
+                    class="weather-icon fas fa-wind icon-color" status="danger"></i>
+                  <span class="temperature">{{ packdash.device_pressure | number:'2.1-2' }} Pa</span>
+                </div>
+                <div class="day">
+                  <span class="caption">Humidity</span>
+
+                  <i *ngIf="packdash.device_humidity == 0.00" class="weather-icon fas fa-tint " status="danger"></i>
+
+                  <i *ngIf="intConversion(packdash.device_min_humidity) > intConversion(packdash.device_humidity) || intConversion(packdash.device_max_humidity) < intConversion(packdash.device_humidity)"
+                    class="weather-icon fas fa-tint warning-msg" status="danger"></i>
+                  <i *ngIf="intConversion(packdash.device_min_humidity) <= intConversion(packdash.device_humidity) && intConversion(packdash.device_max_humidity) > intConversion(packdash.device_humidity)"
+                    class="weather-icon fas fa-tint icon-color" status="danger"></i>
+                  <span class="temperature">{{ packdash.device_humidity | number:'2.1-2' }} %</span>
+                </div>
+                <!--  <div class="day" *ngIf="packdash.device_id != 39">
+                            <span class="caption">Pressure Diff</span>
+                            <i *ngIf="intConversion(packdash.device_min_pressure) > intConversion(packdash.device_pressure) || intConversion(packdash.device_max_pressure) < intConversion(packdash.device_pressure)"
+                              class="weather-icon fas fa-wind warning-msg" status="danger"></i>
+                            <i *ngIf="intConversion(packdash.device_min_pressure) < intConversion(packdash.device_pressure) && intConversion(packdash.device_max_pressure) > intConversion(packdash.device_pressure)"
+                               class="weather-icon fas fa-wind icon-color" status="danger"></i>
+                            <span class="temperature">{{ PackingpressureDiff[i] | number:'2.1-2' }} Pa</span>
+                          </div> -->
+              </div>
+
+              <!-- <div class="today-details">
+                          <div class="parameter">
+                            <span class="caption parameter-name">min & max temp</span>
+                            <span *ngIf="packdash.device_min_temp == 0 && packdash.device_max_temp == 0" class="parameter-value">---</span>
+                            <span *ngIf="packdash.device_min_temp != 0 && packdash.device_max_temp != 0" class="parameter-value small-font">{{packdash.device_min_temp}} &deg; - {{packdash.device_max_temp}} &deg;</span>
+                          
+                          </div>
+                          <div class="parameter">
+                            <span class="caption parameter-name">min & max pre</span>
+                            <span *ngIf="packdash.device_min_pressure == 0 && packdash.device_max_pressure == 0" class="parameter-value">---</span>
+                            <span *ngIf="packdash.device_min_pressure != 0 && packdash.device_max_pressure != 0" class="parameter-value small-font">{{packdash.device_min_pressure}} Pa - {{packdash.device_max_pressure}} Pa</span>
+                          </div>
+                          <div class="parameter">
+                            <span class="caption parameter-name">min & max hum</span>
+                            <span *ngIf="packdash.device_min_humidity == 0 && packdash.device_max_humidity == 0" class="parameter-value">---</span>
+                            <span *ngIf="packdash.device_min_humidity != 0 && packdash.device_max_humidity != 0" class="parameter-value small-font">{{packdash.device_min_humidity}} % - {{packdash.device_max_humidity}} %</span>
+                          </div>
+                        </div>    -->
+
+            </nb-card-body>
+          </nb-card>
+
+        </div>
+      </div>
+    </nb-tab>
+    <nb-tab tabTitle="FILLING" class="nbtab">
+      <div class="col-12 row">
+        <div class="col-xxxl-2 col-xxl-3 col-lg-4 col-md-5 col-sm-6 tile-div"
+          *ngFor="let filldash of FillingdashData; let i = index">
+          <nb-card id="nbcard">
+            <nb-card-body class="card-body">
+              <div>
+                <a *ngIf="editstatus" href="javascript:void(0);" style="float:right"
+                  (click)="editdevicePopup(filldash)"><nb-icon class="action-icon" nbTooltip="Edit Details"
+                    icon="options-2-outline" status="warning"></nb-icon></a>
+                <a href="javascript:void(0);" style="float: right; text-decoration: none"
+                  (click)="copyToClipboard(filldash.device_id)"><nb-icon class="action-icon"
+                    nbTooltip="Copy Device link" icon="clipboard-outline" status="warning"></nb-icon>&nbsp;&nbsp;</a>
+                <nb-icon
+                  *ngIf="intConversion(filldash.device_min_temp) > intConversion(filldash.device_temp) || intConversion(filldash.device_max_temp) < intConversion(filldash.device_temp)
+                              || intConversion(filldash.device_min_pressure) > intConversion(filldash.device_pressure) || intConversion(filldash.device_max_pressure) < intConversion(filldash.device_pressure)
+                              || intConversion(filldash.device_min_humidity) > intConversion(filldash.device_humidity) || intConversion(filldash.device_max_humidity) < intConversion(filldash.device_humidity)"
+                  class="icon-set icon-alert" icon="alert-triangle-outline" status="danger"></nb-icon>
+              </div>
+              <!-- Device Warning -->
+              <span class="h6 location">{{ filldash.device_name }}
+
+              </span>
+              <span class="date">{{ filldash.device_lastupdated | date:'dd-MM-yyyy hh:mm:ss a'}}</span>
+
+              <div class="weekly-forecast range-div">
+                <div class="day">
+                  <span class="caption">Temp</span>
+
+                  <i *ngIf="filldash.device_temp == 0.00" class="weather-icon fas fa-thermometer-half "
+                    status="danger"></i>
+
+                  <i *ngIf="intConversion(filldash.device_min_temp) > intConversion(filldash.device_temp) || intConversion(filldash.device_max_temp) < intConversion(filldash.device_temp)"
+                    class="weather-icon fas fa-thermometer-half warning-msg" status="danger"></i>
+
+                  <i *ngIf="intConversion(filldash.device_min_temp) <= intConversion(filldash.device_temp) && intConversion(filldash.device_max_temp) > intConversion(filldash.device_temp)"
+                    class="weather-icon fas fa-thermometer-half icon-color" status="danger"></i>
+
+                  <span class="temperature">{{ filldash.device_temp | number:'2.1-1' }} &deg;</span>
+                </div>
+                <div class="day">
+                  <span class="caption">Pressure</span>
+
+                  <i *ngIf="filldash.device_pressure == 0.00" class="weather-icon fas fa-wind " status="danger"></i>
+
+
+                  <i *ngIf="intConversion(filldash.device_min_pressure) > intConversion(filldash.device_pressure) || intConversion(filldash.device_max_pressure) < intConversion(filldash.device_pressure)"
+                    class="weather-icon fas fa-wind warning-msg" status="danger"></i>
+                  <i *ngIf="intConversion(filldash.device_min_pressure) <= intConversion(filldash.device_pressure) && intConversion(filldash.device_max_pressure) > intConversion(filldash.device_pressure)"
+                    class="weather-icon fas fa-wind icon-color" status="danger"></i>
+                  <span class="temperature">{{ filldash.device_pressure | number:'2.1-2' }} Pa</span>
+                </div>
+                <div class="day">
+                  <span class="caption">Humidity</span>
+
+                  <i *ngIf="filldash.device_humidity == 0.00" class="weather-icon fas fa-tint " status="danger"></i>
+
+                  <i *ngIf="intConversion(filldash.device_min_humidity) > intConversion(filldash.device_humidity) || intConversion(filldash.device_max_humidity) < intConversion(filldash.device_humidity)"
+                    class="weather-icon fas fa-tint warning-msg" status="danger"></i>
+                  <i *ngIf="intConversion(filldash.device_min_humidity) <= intConversion(filldash.device_humidity) && intConversion(filldash.device_max_humidity) > intConversion(filldash.device_humidity)"
+                    class="weather-icon fas fa-tint icon-color" status="danger"></i>
+                  <span class="temperature">{{ filldash.device_humidity | number:'2.1-2' }} %</span>
+                </div>
+              </div>
+
+              <!-- <div class="today-details">
+                          <div class="parameter">
+                            <span class="caption parameter-name">min & max temp</span>
+                            <span *ngIf="filldash.device_min_temp == 0 && filldash.device_max_temp == 0" class="parameter-value">---</span>
+                            <span *ngIf="filldash.device_min_temp != 0 && filldash.device_max_temp != 0" class="parameter-value small-font">{{filldash.device_min_temp}} &deg; - {{filldash.device_max_temp}} &deg;</span>
+                          
+                          </div>
+                          <div class="parameter">
+                            <span class="caption parameter-name">min & max pre</span>
+                            <span *ngIf="filldash.device_min_pressure == 0 && filldash.device_max_pressure == 0" class="parameter-value">---</span>
+                            <span *ngIf="filldash.device_min_pressure != 0 && filldash.device_max_pressure != 0" class="parameter-value small-font">{{filldash.device_min_pressure}} Pa - {{filldash.device_max_pressure}} Pa</span>
+                          </div>
+                          <div class="parameter">
+                            <span class="caption parameter-name">min & max hum</span>
+                            <span *ngIf="filldash.device_min_humidity == 0 && filldash.device_max_humidity == 0" class="parameter-value">---</span>
+                            <span *ngIf="filldash.device_min_humidity != 0 && filldash.device_max_humidity != 0" class="parameter-value small-font">{{filldash.device_min_humidity}} % - {{filldash.device_max_humidity}} %</span>
+                          </div>
+                        </div>    -->
+
+            </nb-card-body>
+          </nb-card>
+
+        </div>
+      </div>
+    </nb-tab>
+    <nb-tab tabTitle="PRIMARY PACKING" class="nbtab">
+      <div class="col-12 row">
+        <div class="col-xxxl-2 col-xxl-3 col-lg-4 col-md-5 col-sm-6 tile-div"
+          *ngFor="let pripackdash of PriPackdashData; let i = index">
+          <nb-card id="nbcard">
+            <nb-card-body class="card-body">
+              <div>
+                <a *ngIf="editstatus" href="javascript:void(0);" style="float: right"
+                  (click)="editdevicePopup(pripackdash)"><nb-icon class="action-icon" nbTooltip="Edit Details"
+                    icon="options-2-outline" status="warning"></nb-icon></a>
+                <a href="javascript:void(0);" style="float: right; text-decoration: none"
+                  (click)="copyToClipboard(pripackdash.device_id)"><nb-icon class="action-icon"
+                    nbTooltip="Copy Device link" icon="clipboard-outline" status="warning"></nb-icon>&nbsp;&nbsp;</a>
+                <nb-icon
+                  *ngIf="intConversion(pripackdash.device_min_temp) > intConversion(pripackdash.device_temp) || intConversion(pripackdash.device_max_temp) < intConversion(pripackdash.device_temp)
+                              || intConversion(pripackdash.device_min_pressure) > intConversion(pripackdash.device_pressure) || intConversion(pripackdash.device_max_pressure) < intConversion(pripackdash.device_pressure)
+                              || intConversion(pripackdash.device_min_humidity) > intConversion(pripackdash.device_humidity) || intConversion(pripackdash.device_max_humidity) < intConversion(pripackdash.device_humidity)"
+                  class="icon-set icon-alert" icon="alert-triangle-outline" status="danger"></nb-icon>
+              </div>
+              <!-- Device Warning -->
+              <span class="h6 location">{{ pripackdash.device_name }}
+
+              </span>
+              <span class="date">{{ pripackdash.device_lastupdated | date:'dd-MM-yyyy hh:mm:ss a'}}</span>
+
+              <div class="weekly-forecast range-div">
+                <div class="day">
+                  <span class="caption">Temp</span>
+
+                  <i *ngIf="pripackdash.device_min_temp == 0.00" class="weather-icon fas fa-thermometer-half "
+                    status="danger"></i>
+
+                  <i *ngIf="intConversion(pripackdash.device_min_temp) > intConversion(pripackdash.device_temp) || intConversion(pripackdash.device_max_temp) < intConversion(pripackdash.device_temp)"
+                    class="weather-icon fas fa-thermometer-half warning-msg" status="danger"></i>
+
+                  <i *ngIf="intConversion(pripackdash.device_min_temp) <= intConversion(pripackdash.device_temp) && intConversion(pripackdash.device_max_temp) > intConversion(pripackdash.device_temp)"
+                    class="weather-icon fas fa-thermometer-half icon-color" status="danger"></i>
+
+                  <span class="temperature">{{ pripackdash.device_temp | number:'2.1-1' }} &deg;</span>
+                </div>
+                <div class="day">
+                  <span class="caption">Pressure</span>
+
+                  <i *ngIf="pripackdash.device_pressure == 0.00" class="weather-icon fas fa-wind " status="danger"></i>
+
+                  <i *ngIf="intConversion(pripackdash.device_min_pressure) > intConversion(pripackdash.device_pressure) || intConversion(pripackdash.device_max_pressure) < intConversion(pripackdash.device_pressure)"
+                    class="weather-icon fas fa-wind warning-msg" status="danger"></i>
+                  <i *ngIf="intConversion(pripackdash.device_min_pressure) <= intConversion(pripackdash.device_pressure) && intConversion(pripackdash.device_max_pressure) > intConversion(pripackdash.device_pressure)"
+                    class="weather-icon fas fa-wind icon-color" status="danger"></i>
+                  <span class="temperature">{{ pripackdash.device_pressure | number:'2.1-2' }} Pa</span>
+                </div>
+                <div class="day">
+                  <span class="caption">Humidity</span>
+
+                  <i *ngIf="pripackdash.device_humidity == 0.00" class="weather-icon fas fa-tint " status="danger"></i>
+
+                  <i *ngIf="intConversion(pripackdash.device_min_humidity) > intConversion(pripackdash.device_humidity) || intConversion(pripackdash.device_max_humidity) < intConversion(pripackdash.device_humidity)"
+                    class="weather-icon fas fa-tint warning-msg" status="danger"></i>
+                  <i *ngIf="intConversion(pripackdash.device_min_humidity) <= intConversion(pripackdash.device_humidity) && intConversion(pripackdash.device_max_humidity) > intConversion(pripackdash.device_humidity)"
+                    class="weather-icon fas fa-tint icon-color" status="danger"></i>
+                  <span class="temperature">{{ pripackdash.device_humidity | number:'2.1-2' }} %</span>
+                </div>
+              </div>
+
+              <!-- <div class="today-details">
+                          <div class="parameter">
+                            <span class="caption parameter-name">min & max temp</span>
+                            <span *ngIf="pripackdash.device_min_temp == 0 && pripackdash.device_max_temp == 0" class="parameter-value">---</span>
+                            <span *ngIf="pripackdash.device_min_temp != 0 && pripackdash.device_max_temp != 0" class="parameter-value small-font">{{pripackdash.device_min_temp}} &deg; - {{pripackdash.device_max_temp}} &deg;</span>
+                          
+                          </div>
+                          <div class="parameter">
+                            <span class="caption parameter-name">min & max pre</span>
+                            <span *ngIf="pripackdash.device_min_pressure == 0 && pripackdash.device_max_pressure == 0" class="parameter-value">---</span>
+                            <span *ngIf="pripackdash.device_min_pressure != 0 && pripackdash.device_max_pressure != 0" class="parameter-value small-font">{{pripackdash.device_min_pressure}} Pa - {{pripackdash.device_max_pressure}} Pa</span>
+                          </div>
+                          <div class="parameter">
+                            <span class="caption parameter-name">min & max hum</span>
+                            <span *ngIf="pripackdash.device_min_humidity == 0 && pripackdash.device_max_humidity == 0" class="parameter-value">---</span>
+                            <span *ngIf="pripackdash.device_min_humidity != 0 && pripackdash.device_max_humidity != 0" class="parameter-value small-font">{{pripackdash.device_min_humidity}} % - {{pripackdash.device_max_humidity}} %</span>
+                          </div>
+                        </div>    -->
+
+            </nb-card-body>
+          </nb-card>
+
+        </div>
+      </div>
+    </nb-tab>
+
+    <nb-tab tabTitle="CHANGE ROOM" class="nbtab">
+      <div class="col-12 row">
+        <div class="col-xxxl-2 col-xxl-3 col-lg-4 col-md-5 col-sm-6 tile-div"
+          *ngFor="let crdash of ChangeRoomdashData; let i = index">
+          <nb-card id="nbcard">
+            <nb-card-body class="card-body">
+              <div>
+                <a *ngIf="editstatus" href="javascript:void(0);" style="float: right"
+                  (click)="editdevicePopup(crdash)"><nb-icon class="action-icon" nbTooltip="Edit Details"
+                    icon="options-2-outline" status="warning"></nb-icon></a>
+                <a href="javascript:void(0);" style="float: right; text-decoration: none"
+                  (click)="copyToClipboard(crdash.device_id)"><nb-icon class="action-icon"
+                    nbTooltip="Copy Device link" icon="clipboard-outline" status="warning"></nb-icon>&nbsp;&nbsp;</a>
+                <nb-icon
+                  *ngIf="intConversion(crdash.device_min_temp) > intConversion(crdash.device_temp) || intConversion(crdash.device_max_temp) < intConversion(crdash.device_temp)
+                               || intConversion(crdash.device_min_pressure) > intConversion(crdash.device_pressure) || intConversion(crdash.device_max_pressure) < intConversion(crdash.device_pressure)
+                               || intConversion(crdash.device_min_humidity) > intConversion(crdash.device_humidity) || intConversion(crdash.device_max_humidity) < intConversion(crdash.device_humidity)"
+                  class="icon-set icon-alert" icon="alert-triangle-outline" status="danger"></nb-icon>
+              </div>
+              <!-- Device Warning -->
+              <span class="h6 location">{{ crdash.device_name }}
+
+              </span>
+              <span class="date">{{ crdash.device_lastupdated | date:'dd-MM-yyyy hh:mm:ss a'}}</span>
+
+              <div class="weekly-forecast range-div">
+                <div class="day">
+                  <span class="caption">Temp</span>
+
+                  <i *ngIf="crdash.device_min_temp == 0.00" class="weather-icon fas fa-thermometer-half "
+                    status="danger"></i>
+
+                  <i *ngIf="intConversion(crdash.device_min_temp) > intConversion(crdash.device_temp) || intConversion(crdash.device_max_temp) < intConversion(crdash.device_temp)"
+                    class="weather-icon fas fa-thermometer-half warning-msg" status="danger"></i>
+
+                  <i *ngIf="intConversion(crdash.device_min_temp) <= intConversion(crdash.device_temp) && intConversion(crdash.device_max_temp) > intConversion(crdash.device_temp)"
+                    class="weather-icon fas fa-thermometer-half icon-color" status="danger"></i>
+
+                  <span class="temperature">{{ crdash.device_temp | number:'2.1-1' }} &deg;</span>
+                </div>
+                <div class="day">
+                  <span class="caption">Pressure</span>
+
+                  <i *ngIf="crdash.device_pressure == 0.00" class="weather-icon fas fa-wind " status="danger"></i>
+
+                  <i *ngIf="intConversion(crdash.device_min_pressure) > intConversion(crdash.device_pressure) || intConversion(crdash.device_max_pressure) < intConversion(crdash.device_pressure)"
+                    class="weather-icon fas fa-wind warning-msg" status="danger"></i>
+                  <i *ngIf="intConversion(crdash.device_min_pressure) <= intConversion(crdash.device_pressure) && intConversion(crdash.device_max_pressure) > intConversion(crdash.device_pressure)"
+                    class="weather-icon fas fa-wind icon-color" status="danger"></i>
+                  <span class="temperature">{{ crdash.device_pressure | number:'2.1-2' }} Pa</span>
+                </div>
+                <div class="day">
+                  <span class="caption">Humidity</span>
+
+                  <i *ngIf="crdash.device_humidity == 0.00" class="weather-icon fas fa-tint " status="danger"></i>
+
+                  <i *ngIf="intConversion(crdash.device_min_humidity) > intConversion(crdash.device_humidity) || intConversion(crdash.device_max_humidity) < intConversion(crdash.device_humidity)"
+                    class="weather-icon fas fa-tint warning-msg" status="danger"></i>
+                  <i *ngIf="intConversion(crdash.device_min_humidity) <= intConversion(crdash.device_humidity) && intConversion(crdash.device_max_humidity) > intConversion(crdash.device_humidity)"
+                    class="weather-icon fas fa-tint icon-color" status="danger"></i>
+                  <span class="temperature">{{ crdash.device_humidity | number:'2.1-2' }} %</span>
+                </div>
+              </div>
+
+            </nb-card-body>
+          </nb-card>
+
+        </div>
+      </div>
+    </nb-tab>
+  </nb-tabset>
+
+
+</div>
+
+
+<div class="col-12 row nbtab" *ngIf="room_id == 2" style="padding: 10px;">
+  <nb-tabset style="width:100%;">
+    <nb-tab tabTitle="All" class="nbtab">
+      <div class="col-12 row">
+        <div class="col-xxxl-2 col-xxl-2 col-lg-3 col-md-4 col-sm-6 tile-div"
+          *ngFor="let dash of dashData; let i = index">
+          <nb-card id="nbcard" *ngIf="dash.group_id != '2'">
+            <nb-card-body class="card-body">
+              <div>
+                <a *ngIf="editstatus" href="javascript:void(0);" style="float:right"
+                  (click)="editdevicePopup(dash)"><nb-icon class="action-icon" nbTooltip="Edit Details"
+                    icon="options-2-outline" status="warning"></nb-icon></a>
+                <a href="javascript:void(0);" style="float: right; text-decoration: none"
+                  (click)="copyToClipboard(dash.device_id)"><nb-icon class="action-icon" nbTooltip="Copy Device link"
+                    icon="clipboard-outline" status="warning"></nb-icon>&nbsp;&nbsp;</a>
+                <nb-icon
+                  *ngIf="intConversion(dash.device_min_temp) > intConversion(dash.device_temp) || intConversion(dash.device_max_temp) < intConversion(dash.device_temp)
+                  || intConversion(dash.device_min_pressure) > intConversion(dash.device_pressure) || intConversion(dash.device_max_pressure) < intConversion(dash.device_pressure)
+                  || intConversion(dash.device_min_humidity) > intConversion(dash.device_humidity) || intConversion(dash.device_max_humidity) < intConversion(dash.device_humidity)"
+                  class="icon-set icon-alert" icon="alert-triangle-outline" status="danger"></nb-icon>
+              </div>
+              <!-- Device Warning -->
+              <span class="h6 location" style="cursor: pointer;"
+                (click)="sensorview(dash.device_id,dash.device_name)">{{ dash.device_name }}
+
+              </span>
+              <span class="date">{{ dash.device_lastupdated | date:'dd-MM-yyyy hh:mm:ss a'}}</span>
+
+              <div class="weekly-forecast range-div">
+                <div class="day" *ngIf="dash.device_temp">
+                  <span class="caption">Temp</span>
+
+                  <i *ngIf="dash.device_temp == 0.00" class="weather-icon fas fa-thermometer-half " status="danger"></i>
+
+                  <i *ngIf="intConversion(dash.device_min_temp) > intConversion(dash.device_temp) || intConversion(dash.device_max_temp) < intConversion(dash.device_temp)"
+                    class="weather-icon fas fa-thermometer-half warning-msg" status="danger"></i>
+
+                  <i *ngIf="intConversion(dash.device_min_temp) <= intConversion(dash.device_temp) && intConversion(dash.device_max_temp) > intConversion(dash.device_temp)"
+                    class="weather-icon fas fa-thermometer-half icon-color" status="danger"></i>
+
+                  <span class="temperature">{{ dash.device_temp | number:'2.1-1' }} &deg;</span>
+                </div>
+                <div class="day" *ngIf="dash.device_pressure">
+                  <span class="caption">Pressure</span>
+
+                  <i *ngIf="dash.device_pressure == 0.00" class="weather-icon fas fa-wind " status="danger"></i>
+
+
+                  <i *ngIf="intConversion(dash.device_min_pressure) > intConversion(dash.device_pressure) || intConversion(dash.device_max_pressure) < intConversion(dash.device_pressure)"
+                    class="weather-icon fas fa-wind warning-msg" status="danger"></i>
+                  <i *ngIf="intConversion(dash.device_min_pressure) <= intConversion(dash.device_pressure) && intConversion(dash.device_max_pressure) > intConversion(dash.device_pressure)"
+                    class="weather-icon fas fa-wind icon-color" status="danger"></i>
+                  <span class="temperature">{{ dash.device_pressure | number:'2.1-2' }} Pa</span>
+                </div>
+                <div class="day" *ngIf="dash.device_humidity">
+                  <span class="caption">Humidity</span>
+
+                  <i *ngIf="dash.device_humidity == 0.00" class="weather-icon fas fa-tint " status="danger"></i>
+
+                  <i *ngIf="intConversion(dash.device_min_humidity) > intConversion(dash.device_humidity) || intConversion(dash.device_max_humidity) < intConversion(dash.device_humidity)"
+                    class="weather-icon fas fa-tint warning-msg" status="danger"></i>
+                  <i *ngIf="intConversion(dash.device_min_humidity) <= intConversion(dash.device_humidity) && intConversion(dash.device_max_humidity) > intConversion(dash.device_humidity)"
+                    class="weather-icon fas fa-tint icon-color" status="danger"></i>
+                  <span class="temperature">{{ dash.device_humidity | number:'2.1-2' }} %</span>
+                </div>
+              </div>
+
+            </nb-card-body>
+          </nb-card>
+
+          <nb-card id="nbcard" *ngIf="dash.group_id == '2'">
+            <nb-card-body class="card-body">
+              <div>
+                <a *ngIf="editstatus" href="javascript:void(0);" style="float: right"
+                  (click)="editdevicePopup(dash,1)"><nb-icon class="action-icon" nbTooltip="Edit Details"
+                    icon="options-2-outline" status="warning"></nb-icon></a>
+                <a href="javascript:void(0);" style="float: right; text-decoration: none"
+                  (click)="copyToClipboard(dash.device_id)"><nb-icon class="action-icon" nbTooltip="Copy Device link"
+                    icon="clipboard-outline" status="warning"></nb-icon>&nbsp;&nbsp;</a>
+                <nb-icon
+                  *ngIf="intConversion(dash.device_min_temp) > intConversion(dash.device_temp) || intConversion(dash.device_max_temp) < intConversion(dash.device_temp)
+                        || intConversion(dash.device_min_humidity) > intConversion(dash.device_humidity) || intConversion(dash.device_max_humidity) < intConversion(dash.device_humidity)"
+                  class="icon-set icon-alert" icon="alert-triangle-outline" status="danger"></nb-icon>
+              </div>
+              <!-- Device Warning -->
+              <span class="h6 location">{{ dash.device_name }}
+
+              </span>
+              <span class="date">{{ dash.device_lastupdated | date:'dd-MM-yyyy hh:mm:ss a'}}</span>
+
+              <div class="weekly-forecast range-div">
+                <div class="day" *ngIf="dash.device_temp">
+                  <span class="caption">0.5 uM/Cu.M</span>
+
+                  <i *ngIf="dash.device_temp == 0.00" class="weather-icon fas fab fa-hubspot" status="danger"></i>
+                  <i *ngIf="intConversion(dash.device_min_temp) > intConversion(dash.device_temp) || intConversion(dash.device_max_temp) < intConversion(dash.device_temp)"
+                    class="weather-icon fab fa-hubspot warning-msg" status="danger"></i>
+
+                  <i *ngIf="intConversion(dash.device_min_temp) <= intConversion(dash.device_temp) && intConversion(dash.device_max_temp) >= intConversion(dash.device_temp)"
+                    class="weather-icon fab fa-hubspot icon-color" status="danger"></i>
+
+                  <span class="temperature">{{ dash.device_temp | number:'2.1-2'}} uM/Cu.M</span>
+                </div>
+                <div class="day" *ngIf="dash.device_pressure">
+                  <span class="caption">5 uM/Cu.M</span>
+
+                  <i *ngIf="dash.device_pressure == 0.00" class="weather-icon fab fa-hubspot " status="danger"></i>
+
+
+                  <i *ngIf="intConversion(dash.device_min_humidity) > intConversion(dash.device_humidity) || intConversion(dash.device_max_humidity) < intConversion(dash.device_humidity)"
+                    class="weather-icon fab fa-hubspot warning-msg" status="danger"></i>
+                  <i *ngIf="intConversion(dash.device_min_humidity) <= intConversion(dash.device_humidity) && intConversion(dash.device_max_humidity) > intConversion(dash.device_humidity)"
+                    class="weather-icon fab fa-hubspot icon-color" status="danger"></i>
+                  <span class="temperature">{{ dash.device_humidity | number:'2.1-2' }} uM/Cu.M</span>
+                </div>
+              </div>
+
+            </nb-card-body>
+          </nb-card>
+
+        </div>
+      </div>
+    </nb-tab>
+
+    <nb-tab tabTitle="INJECTION" class="nbtab">
+      <div class="col-12 row">
+        <div class="col-xxxl-2 col-xxl-3 col-lg-4 col-md-5 col-sm-6 tile-div"
+          *ngFor="let tabletdash of TabletdashData; let i = index">
+          <nb-card id="nbcard">
+            <nb-card-body class="card-body">
+              <div>
+                <a *ngIf="editstatus" href="javascript:void(0);" style="float: right"
+                  (click)="editdevicePopup(tabletdash)"><nb-icon class="action-icon" nbTooltip="Edit Details"
+                    icon="options-2-outline" status="warning"></nb-icon></a>
+                <a href="javascript:void(0);" style="float: right; text-decoration: none"
+                  (click)="copyToClipboard(tabletdash.device_id)"><nb-icon class="action-icon"
+                    nbTooltip="Copy Device link" icon="clipboard-outline" status="warning"></nb-icon>&nbsp;&nbsp;</a>
+                <nb-icon
+                  *ngIf="intConversion(tabletdash.device_min_temp) > intConversion(tabletdash.device_temp) || intConversion(tabletdash.device_max_temp) < intConversion(tabletdash.device_temp)
+                              || intConversion(tabletdash.device_min_pressure) > intConversion(tabletdash.device_pressure) || intConversion(tabletdash.device_max_pressure) < intConversion(tabletdash.device_pressure)
+                              || intConversion(tabletdash.device_min_humidity) > intConversion(tabletdash.device_humidity) || intConversion(tabletdash.device_max_humidity) < intConversion(tabletdash.device_humidity)"
+                  class="icon-set icon-alert" icon="alert-triangle-outline" status="danger"></nb-icon>
+              </div>
+              <!-- Device Warning -->
+              <span class="h6 location">{{ tabletdash.device_name }}
+
+              </span>
+              <span class="date">{{ tabletdash.device_lastupdated | date:'dd-MM-yyyy hh:mm:ss a'}}</span>
+
+              <div class="weekly-forecast range-div">
+                <div class="day" *ngIf="tabletdash.device_temp">
+                  <span class="caption">Temp</span>
+
+                  <i *ngIf="tabletdash.device_temp == 0.00" class="weather-icon fas fa-thermometer-half "
+                    status="danger"></i>
+
+                  <i *ngIf="intConversion(tabletdash.device_min_temp) > intConversion(tabletdash.device_temp) || intConversion(tabletdash.device_max_temp) < intConversion(tabletdash.device_temp)"
+                    class="weather-icon fas fa-thermometer-half warning-msg" status="danger"></i>
+
+                  <i *ngIf="intConversion(tabletdash.device_min_temp) <= intConversion(tabletdash.device_temp) && intConversion(tabletdash.device_max_temp) > intConversion(tabletdash.device_temp)"
+                    class="weather-icon fas fa-thermometer-half icon-color" status="danger"></i>
+
+                  <span class="temperature">{{ tabletdash.device_temp | number:'2.1-1' }} &deg;</span>
+                </div>
+                <div class="day" *ngIf="tabletdash.device_pressure">
+                  <span class="caption">Pressure</span>
+
+                  <i *ngIf="tabletdash.device_pressure == 0.00" class="weather-icon fas fa-wind " status="danger"></i>
+
+
+                  <i *ngIf="intConversion(tabletdash.device_min_pressure) > intConversion(tabletdash.device_pressure) || intConversion(tabletdash.device_max_pressure) < intConversion(tabletdash.device_pressure)"
+                    class="weather-icon fas fa-wind warning-msg" status="danger"></i>
+                  <i *ngIf="intConversion(tabletdash.device_min_pressure) <= intConversion(tabletdash.device_pressure) && intConversion(tabletdash.device_max_pressure) > intConversion(tabletdash.device_pressure)"
+                    class="weather-icon fas fa-wind icon-color" status="danger"></i>
+                  <span class="temperature">{{ tabletdash.device_pressure | number:'2.1-2' }} Pa</span>
+                </div>
+                <div class="day" *ngIf="tabletdash.device_humidity">
+                  <span class="caption">Humidity</span>
+
+                  <i *ngIf="tabletdash.device_humidity == 0.00" class="weather-icon fas fa-tint " status="danger"></i>
+
+                  <i *ngIf="intConversion(tabletdash.device_min_humidity) > intConversion(tabletdash.device_humidity) || intConversion(tabletdash.device_max_humidity) < intConversion(tabletdash.device_humidity)"
+                    class="weather-icon fas fa-tint warning-msg" status="danger"></i>
+                  <i *ngIf="intConversion(tabletdash.device_min_humidity) <= intConversion(tabletdash.device_humidity) && intConversion(tabletdash.device_max_humidity) > intConversion(tabletdash.device_humidity)"
+                    class="weather-icon fas fa-tint icon-color" status="danger"></i>
+                  <span class="temperature">{{ tabletdash.device_humidity | number:'2.1-2' }} %</span>
+                </div>
+              </div>
+
+            </nb-card-body>
+          </nb-card>
+
+        </div>
+      </div>
+    </nb-tab>
+
+    <nb-tab tabTitle="PARTICALS" class="nbtab">
+      <div class="col-12 row">
+        <div class="col-xxxl-2 col-xxl-3 col-lg-4 col-md-5 col-sm-6 tile-div"
+          *ngFor="let injdash of InjdashData; let i = index">
+          <nb-card id="nbcard">
+            <nb-card-body class="card-body">
+              <div>
+                <a *ngIf="editstatus" href="javascript:void(0);" style="float: right"
+                  (click)="editdevicePopup(injdash,1)"><nb-icon class="action-icon" nbTooltip="Edit Details"
+                    icon="options-2-outline" status="warning"></nb-icon></a>
+                <a href="javascript:void(0);" style="float: right; text-decoration: none"
+                  (click)="copyToClipboard(injdash.device_id)"><nb-icon class="action-icon" nbTooltip="Copy Device link"
+                    icon="clipboard-outline" status="warning"></nb-icon>&nbsp;&nbsp;</a>
+                <nb-icon
+                  *ngIf="intConversion(injdash.device_min_temp) > intConversion(injdash.device_temp) || intConversion(injdash.device_max_temp) < intConversion(injdash.device_temp)
+                              || intConversion(injdash.device_min_humidity) > intConversion(injdash.device_humidity) || intConversion(injdash.device_max_humidity) < intConversion(injdash.device_humidity)"
+                  class="icon-set icon-alert" icon="alert-triangle-outline" status="danger"></nb-icon>
+              </div>
+              <!-- Device Warning -->
+              <span class="h6 location">{{ injdash.device_name }}
+
+              </span>
+              <span class="date">{{ injdash.device_lastupdated | date:'dd-MM-yyyy hh:mm:ss a'}}</span>
+
+              <div class="weekly-forecast range-div">
+                <div class="day" *ngIf="injdash.device_temp">
+                  <span class="caption">0.5 uM/Cu.M</span>
+
+                  <i *ngIf="injdash.device_temp == 0.00" class="weather-icon fas fab fa-hubspot" status="danger"></i>
+                  <i *ngIf="intConversion(injdash.device_min_temp) > intConversion(injdash.device_temp) || intConversion(injdash.device_max_temp) < intConversion(injdash.device_temp)"
+                    class="weather-icon fab fa-hubspot warning-msg" status="danger"></i>
+
+                  <i *ngIf="intConversion(injdash.device_min_temp) <= intConversion(injdash.device_temp) && intConversion(injdash.device_max_temp) >= intConversion(injdash.device_temp)"
+                    class="weather-icon fab fa-hubspot icon-color" status="danger"></i>
+
+                  <span class="temperature">{{ injdash.device_temp | number:'2.1-2'}} uM/Cu.M</span>
+                </div>
+                <div class="day" *ngIf="injdash.device_pressure">
+                  <span class="caption">5 uM/Cu.M</span>
+
+                  <i *ngIf="injdash.device_pressure == 0.00" class="weather-icon fab fa-hubspot " status="danger"></i>
+
+
+                  <i *ngIf="intConversion(injdash.device_min_humidity) > intConversion(injdash.device_humidity) || intConversion(injdash.device_max_humidity) < intConversion(injdash.device_humidity)"
+                    class="weather-icon fab fa-hubspot warning-msg" status="danger"></i>
+                  <i *ngIf="intConversion(injdash.device_min_humidity) <= intConversion(injdash.device_humidity) && intConversion(injdash.device_max_humidity) > intConversion(injdash.device_humidity)"
+                    class="weather-icon fab fa-hubspot icon-color" status="danger"></i>
+                  <span class="temperature">{{ injdash.device_humidity | number:'2.1-2' }} uM/Cu.M</span>
+                </div>
+              </div>
+
+            </nb-card-body>
+          </nb-card>
+
+        </div>
+      </div>
+    </nb-tab>
+
+  </nb-tabset>
+
+</div>
+
+
+
+<div class="col-12 row nbtab" *ngIf="room_id == 3" style="padding: 10px;">
+  <div class="col-xxxl-2 col-xxl-2 col-lg-3 col-md-4 col-sm-6 tile-div" *ngFor="let dash of dashData; let i = index">
+    <nb-card id="nbcard">
+      <nb-card-body class="card-body">
+        <div>
+          <a *ngIf="editstatus" href="javascript:void(0);" style="float:right" (click)="editdevicePopup(dash)"><nb-icon
+              class="action-icon" nbTooltip="Edit Details" icon="options-2-outline" status="warning"></nb-icon></a>
+          <a href="javascript:void(0);" style="float: right; text-decoration: none"
+            (click)="copyToClipboard(dash.device_id)"><nb-icon class="action-icon" nbTooltip="Copy Device link"
+              icon="clipboard-outline" status="warning"></nb-icon>&nbsp;&nbsp;</a>
+          <nb-icon
+            *ngIf="intConversion(dash.device_min_temp) > intConversion(dash.device_temp) || intConversion(dash.device_max_temp) < intConversion(dash.device_temp)
+                  || intConversion(dash.device_min_pressure) > intConversion(dash.device_pressure) || intConversion(dash.device_max_pressure) < intConversion(dash.device_pressure)
+                  || intConversion(dash.device_min_humidity) > intConversion(dash.device_humidity) || intConversion(dash.device_max_humidity) < intConversion(dash.device_humidity)"
+            class="icon-set icon-alert" icon="alert-triangle-outline" status="danger"></nb-icon>
+        </div>
+        <!-- Device Warning -->
+        <span class="h6 location" style="cursor: pointer;" (click)="sensorview(dash.device_id,dash.device_name)">{{
+          dash.device_name }}
+
+        </span>
+        <span class="date">{{ dash.device_lastupdated | date:'dd-MM-yyyy hh:mm:ss a'}}</span>
+
+        <div class="weekly-forecast range-div">
+          <div class="day" *ngIf="dash.device_temp">
+            <span class="caption">Temp</span>
+
+            <i *ngIf="dash.device_temp == 0.00" class="weather-icon fas fa-thermometer-half " status="danger"></i>
+
+            <i *ngIf="intConversion(dash.device_min_temp) > intConversion(dash.device_temp) || intConversion(dash.device_max_temp) < intConversion(dash.device_temp)"
+              class="weather-icon fas fa-thermometer-half warning-msg" status="danger"></i>
+
+            <i *ngIf="intConversion(dash.device_min_temp) <= intConversion(dash.device_temp) && intConversion(dash.device_max_temp) > intConversion(dash.device_temp)"
+              class="weather-icon fas fa-thermometer-half icon-color" status="danger"></i>
+
+            <span class="temperature">{{ dash.device_temp | number:'2.1-1' }} &deg;</span>
+          </div>
+          <div class="day" *ngIf="dash.device_pressure">
+            <span class="caption">Pressure</span>
+
+
+            <i *ngIf="dash.device_pressure == 0.00" class="weather-icon fas fa-wind " status="danger"></i>
+
+
+            <i *ngIf="intConversion(dash.device_min_pressure) > intConversion(dash.device_pressure) || intConversion(dash.device_max_pressure) < intConversion(dash.device_pressure)"
+              class="weather-icon fas fa-wind warning-msg" status="danger"></i>
+            <i *ngIf="intConversion(dash.device_min_pressure) <= intConversion(dash.device_pressure) && intConversion(dash.device_max_pressure) > intConversion(dash.device_pressure)"
+              class="weather-icon fas fa-wind icon-color" status="danger"></i>
+            <span class="temperature">{{ dash.device_pressure | number:'2.1-2' }} Pa</span>
+          </div>
+          <div class="day" *ngIf="dash.device_humidity">
+            <span class="caption">Humidity</span>
+
+            <i *ngIf="dash.device_humidity == 0.00" class="weather-icon fas fa-tint " status="danger"></i>
+
+            <i *ngIf="intConversion(dash.device_min_humidity) > intConversion(dash.device_humidity) || intConversion(dash.device_max_humidity) < intConversion(dash.device_humidity)"
+              class="weather-icon fas fa-tint warning-msg" status="danger"></i>
+            <i *ngIf="intConversion(dash.device_min_humidity) <= intConversion(dash.device_humidity) && intConversion(dash.device_max_humidity) > intConversion(dash.device_humidity)"
+              class="weather-icon fas fa-tint icon-color" status="danger"></i>
+            <span class="temperature">{{ dash.device_humidity | number:'2.1-2' }} %</span>
+          </div>
+          <!-- <div class="day" *ngIf="dash.device_id == 80 || dash.device_id == 81 || dash.device_id == 82 || dash.device_id == 83">
+                <span class="caption">Pressure Diff</span>
+                <i class="weather-icon fas fa-wind " status="danger"></i>
+                <!-- <i *ngIf="intConversion(pripackdash.device_min_pressure) < intConversion(pripackdash.device_pressure) && intConversion(pripackdash.device_max_pressure) > intConversion(pripackdash.device_pressure)"
+                   class="weather-icon fas fa-wind icon-color" status="danger"></i> 
+                <span class="temperature">{{ DashpressureDiff[i] | number:'2.1-2' }} Pa</span>
+              </div> -->
+        </div>
+
+        <!-- <div class="today-details">
+              <div class="parameter" *ngIf="dash.device_temp" >
+                <span class="caption parameter-name">min & max temp</span>
+                <span *ngIf="dash.device_min_temp == 0 && dash.device_max_temp == 0" class="parameter-value">---</span>
+                <span *ngIf="dash.device_min_temp != 0 && dash.device_max_temp != 0" class="parameter-value small-font">{{dash.device_min_temp}} &deg; - {{dash.device_max_temp}} &deg;</span>
+              
+              </div>
+              <div class="parameter" *ngIf="dash.device_pressure">
+                <span class="caption parameter-name">min & max pre</span>
+                <span *ngIf="dash.device_min_pressure == 0 && dash.device_max_pressure == 0" class="parameter-value">---</span>
+                <span *ngIf="dash.device_min_pressure != 0 && dash.device_max_pressure != 0" class="parameter-value small-font">{{dash.device_min_pressure}} Pa - {{dash.device_max_pressure}} Pa</span>
+              </div>
+              <div class="parameter" *ngIf="dash.device_humidity">
+                <span class="caption parameter-name">min & max hum</span>
+                <span *ngIf="dash.device_min_humidity == 0 && dash.device_max_humidity == 0" class="parameter-value">---</span>
+                <span *ngIf="dash.device_min_humidity != 0 && dash.device_max_humidity != 0" class="parameter-value small-font">{{dash.device_min_humidity}} % - {{dash.device_max_humidity}} %</span>
+              </div>
+            </div>    -->
+
+      </nb-card-body>
+    </nb-card>
+
+  </div>
+</div>
+
+
+<ng-template #dialog let-data let-ref="dialogRef" fullWidth>
+  <nb-card>
+
+    <nb-card-header>Edit Device Configuration
+      <nb-icon class="icon-set" style="float: right" id="closeBTN" (click)="ref.close()" icon="close-outline"
+        status="warning"></nb-icon>
+    </nb-card-header>
+    <nb-card-body>
+      <form class="register-form" name="form" (ngSubmit)="f.form.valid && updateDevicesConfValue()" #f="ngForm"
+        novalidate class="form">
+        <p class="col-sm-3" *ngIf="partials !=1">Temperature</p>
+        <p class="col-sm-3" *ngIf="partials ==1">0.5 UM/CU.M</p>
+        <div class="row">
+          <input type="hidden" id="device_id" [(ngModel)]="model.device_id" name="device_id" #device_id="ngModel">
+          <div class="col-sm-6">
+
+            <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !mintemp.valid }">
+
+              <input type="text" nbInput fullWidth id="mintemp" placeholder="Min Temp" [(ngModel)]="model.mintemp"
+                name="mintemp" #mintemp="ngModel" required>
+            </div>
+            <div *ngIf="f.submitted && !mintemp.valid" class="alert-warning">Minimum Temperature is required</div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !maxtemp.valid }">
+
+              <input type="text" nbInput fullWidth id="maxtemp" placeholder="Max Temp" [(ngModel)]="model.maxtemp"
+                name="maxtemp" #maxtemp="ngModel" required>
+            </div>
+            <div *ngIf="f.submitted && !maxtemp.valid" class="alert-warning">Maximum Temperature is required</div>
+          </div>
+        </div>
+        <p class="col-sm-3" *ngIf="partials !=1">Pressure</p>
+
+        <div class="row" *ngIf="partials !=1">
+
+          <div class="col-sm-6">
+            <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !minpres.valid }">
+              <input type="text" nbInput fullWidth id="minpres" placeholder="Min Pres" [(ngModel)]="model.minpres"
+                name="minpres" #minpres="ngModel" required>
+            </div>
+            <div *ngIf="f.submitted && !minpres.valid" class="alert-warning">Minimum Pressure is required</div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !maxpres.valid }">
+              <input type="text" nbInput fullWidth id="maxpres" placeholder="Max Pres" [(ngModel)]="model.maxpres"
+                name="maxpres" #maxpres="ngModel" required>
+            </div>
+            <div *ngIf="f.submitted && !maxpres.valid" class="alert-warning">Maximum Pressure is required</div>
+          </div>
+        </div>
+
+        <p class="col-sm-3" *ngIf="partials !=1">Humidity</p>
+        <p class="col-sm-3" *ngIf="partials ==1">5 UM/CU.M</p>
+        <div class="row">
+
+          <div class="col-sm-6">
+            <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !minhum.valid }">
+
+              <input type="text" nbInput fullWidth id="minhum" placeholder="Min Hum" [(ngModel)]="model.minhum"
+                name="minhum" #minhum="ngModel" required>
+            </div>
+            <div *ngIf="f.submitted && !minhum.valid" class="alert-warning">Minimum Humidity is required</div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !maxhum.valid }">
+
+              <input type="text" nbInput fullWidth id="maxhum" placeholder="Max Hum" [(ngModel)]="model.maxhum"
+                name="maxhum" #maxhum="ngModel" required>
+            </div>
+            <div *ngIf="f.submitted && !maxhum.valid" class="alert-warning">Maximum Humidity is required</div>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-outline-success" data-dismiss="modal" nbButton>Submit</button>
+      </form>
+    </nb-card-body>
+
+  </nb-card>
+</ng-template>

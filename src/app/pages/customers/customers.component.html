@@ -1,0 +1,483 @@
+<a href="javascript:void(0);" class="float" (click)="addCustomerPopup()" nbTooltip="Add New Customer">
+  <i class="fa fa-plus my-float"></i>
+  </a>
+
+<div class="row">
+<div class="col-xxxl-3 col-xxl-4 col-lg-5 col-md-6"  *ngFor="let custo of customer; let i = index">
+    
+ <nb-card>
+      <nb-card-header>
+          <nb-checkbox #custA></nb-checkbox>
+        <div style="float:right">
+            <a href="javascript:void(0);"><nb-icon class="icon-set" nbTooltip="Manage Customer Users" icon="person-add-outline" status="warning"></nb-icon></a>
+            <a href="javascript:void(0);"><nb-icon class="icon-set" nbTooltip="Manage Customer Devices" icon="cast-outline" status="warning"></nb-icon></a>
+            <a href="javascript:void(0);"><nb-icon class="icon-set" nbTooltip="Manage Customer Assets" icon="layers-outline" status="warning"></nb-icon></a>
+            <a href="javascript:void(0);" (click)="deleteCustomer(custo._id,custo.title)"><nb-icon class="icon-set" nbTooltip="Delete Customer" icon="trash-2-outline" status="warning" ></nb-icon></a>
+        </div>
+      </nb-card-header>
+     
+      <nb-card-body  (click)="updateCustomerPopup(custo._id)">
+          <a href="javascript:void(0);" class="no-underline">
+        <div class="">
+          <h6>{{ custo.title }}</h6>
+          <div class="">{{ custo.address1 }} {{ custo.address2 }}</div>
+          <br>
+        </div>
+      </a>
+      </nb-card-body>
+    </nb-card>
+</div>
+</div>
+
+
+    <ng-template #dialog let-data let-ref="dialogRef" fullWidth>
+        <nb-card>
+            <nb-card-header>Add Customer
+                <nb-icon class="icon-set" style="float: right" (click)="ref.close()" icon="close-outline" status="warning"></nb-icon>
+            </nb-card-header>
+            <nb-card-body>
+            <form class="register-form" name="form" (ngSubmit)="f.form.valid && addCustomer()" #f="ngForm" novalidate class="form">
+              <div class="row">
+                <div class="col-sm-12">
+                  <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !title.valid }">
+                      <label for="inputEmail1" class="label col-sm-3 col-form-label"></label>
+                    <input type="text" nbInput fullWidth id="title" placeholder="Title" [(ngModel)]="model.title" name="title" #title="ngModel" required >
+                  </div>
+                  <div *ngIf="f.submitted && !title.valid" class="alert-warning">Title is required</div>
+                </div>
+              
+                <div class="col-sm-12">
+                  <div class="form-group"  [ngClass]="{ 'has-error': f.submitted && !desc.valid }">
+                      <label for="inputEmail1" class="label col-sm-3 col-form-label"></label>
+                    <textarea rows="5" nbInput fullWidth shape="round"  placeholder="Description" [(ngModel)]="model.desc" name="desc" #desc="ngModel" required ></textarea>
+                  </div>
+                  <div *ngIf="f.submitted && !desc.valid" class="alert-warning">Description is required</div>
+                </div>
+               
+              </div>
+              <div class="row">
+                <div class="col-sm-3">
+                  <div class="form-group"  [ngClass]="{ 'has-error': f.submitted && !country.valid }">
+                      <label for="inputEmail1" class="label col-sm-3 col-form-label"></label>
+                      <nb-select selected="1" fullWidth [(ngModel)]="model.country" #country="ngModel" name="country" required >
+                          <nb-option value="1" hidden>Country</nb-option>
+                          <nb-option value="Afghanistan">Afghanistan</nb-option>
+                          <nb-option value="Åland Islands">Åland Islands</nb-option>
+                          <nb-option value="Albania">Albania</nb-option>
+                          <nb-option value="Algeria">Algeria</nb-option>
+                          <nb-option value="American Samoa">American Samoa</nb-option>
+                          <nb-option value="Andorra">Andorra</nb-option>
+                          <nb-option value="Angola">Angola</nb-option>
+                          <nb-option value="Anguilla">Anguilla</nb-option>
+                          <nb-option value="Antarctica">Antarctica</nb-option>
+                          <nb-option value="Antigua and Barbuda">Antigua and Barbuda</nb-option>
+                          <nb-option value="Argentina">Argentina</nb-option>
+                          <nb-option value="Armenia">Armenia</nb-option>
+                          <nb-option value="Aruba">Aruba</nb-option>
+                          <nb-option value="Australia">Australia</nb-option>
+                          <nb-option value="Austria">Austria</nb-option>
+                          <nb-option value="Azerbaijan">Azerbaijan</nb-option>
+                          <nb-option value="Bahamas">Bahamas</nb-option>
+                          <nb-option value="Bahrain">Bahrain</nb-option>
+                          <nb-option value="Bangladesh">Bangladesh</nb-option>
+                          <nb-option value="Barbados">Barbados</nb-option>
+                          <nb-option value="Belarus">Belarus</nb-option>
+                          <nb-option value="Belgium">Belgium</nb-option>
+                          <nb-option value="Belize">Belize</nb-option>
+                          <nb-option value="Benin">Benin</nb-option>
+                          <nb-option value="Bermuda">Bermuda</nb-option>
+                          <nb-option value="Bhutan">Bhutan</nb-option>
+                          <nb-option value="Bolivia">Bolivia</nb-option>
+                          <nb-option value="Bosnia and Herzegovina">Bosnia and Herzegovina</nb-option>
+                          <nb-option value="Botswana">Botswana</nb-option>
+                          <nb-option value="Bouvet Island">Bouvet Island</nb-option>
+                          <nb-option value="Brazil">Brazil</nb-option>
+                          <nb-option value="British Indian Ocean Territory">British Indian Ocean Territory</nb-option>
+                          <nb-option value="Brunei Darussalam">Brunei Darussalam</nb-option>
+                          <nb-option value="Bulgaria">Bulgaria</nb-option>
+                          <nb-option value="Burkina Faso">Burkina Faso</nb-option>
+                          <nb-option value="Burundi">Burundi</nb-option>
+                          <nb-option value="Cambodia">Cambodia</nb-option>
+                          <nb-option value="Cameroon">Cameroon</nb-option>
+                          <nb-option value="Canada">Canada</nb-option>
+                          <nb-option value="Cape Verde">Cape Verde</nb-option>
+                          <nb-option value="Cayman Islands">Cayman Islands</nb-option>
+                          <nb-option value="Central African Republic">Central African Republic</nb-option>
+                          <nb-option value="Chad">Chad</nb-option>
+                          <nb-option value="Chile">Chile</nb-option>
+                          <nb-option value="China">China</nb-option>
+                          <nb-option value="Christmas Island">Christmas Island</nb-option>
+                          <nb-option value="Cocos (Keeling) Islands">Cocos (Keeling) Islands</nb-option>
+                          <nb-option value="Colombia">Colombia</nb-option>
+                          <nb-option value="Comoros">Comoros</nb-option>
+                          <nb-option value="Congo">Congo</nb-option>
+                          <nb-option value="Congo, The Democratic Republic of The">Congo, The Democratic Republic of The</nb-option>
+                          <nb-option value="Cook Islands">Cook Islands</nb-option>
+                          <nb-option value="Costa Rica">Costa Rica</nb-option>
+                          <nb-option value="Cote D'ivoire">Cote D'ivoire</nb-option>
+                          <nb-option value="Croatia">Croatia</nb-option>
+                          <nb-option value="Cuba">Cuba</nb-option>
+                          <nb-option value="Cyprus">Cyprus</nb-option>
+                          <nb-option value="Czech Republic">Czech Republic</nb-option>
+                          <nb-option value="Denmark">Denmark</nb-option>
+                          <nb-option value="Djibouti">Djibouti</nb-option>
+                          <nb-option value="Dominica">Dominica</nb-option>
+                          <nb-option value="Dominican Republic">Dominican Republic</nb-option>
+                          <nb-option value="Ecuador">Ecuador</nb-option>
+                          <nb-option value="Egypt">Egypt</nb-option>
+                          <nb-option value="El Salvador">El Salvador</nb-option>
+                          <nb-option value="Equatorial Guinea">Equatorial Guinea</nb-option>
+                          <nb-option value="Eritrea">Eritrea</nb-option>
+                          <nb-option value="Estonia">Estonia</nb-option>
+                          <nb-option value="Ethiopia">Ethiopia</nb-option>
+                          <nb-option value="Falkland Islands (Malvinas)">Falkland Islands (Malvinas)</nb-option>
+                          <nb-option value="Faroe Islands">Faroe Islands</nb-option>
+                          <nb-option value="Fiji">Fiji</nb-option>
+                          <nb-option value="Finland">Finland</nb-option>
+                          <nb-option value="France">France</nb-option>
+                          <nb-option value="French Guiana">French Guiana</nb-option>
+                          <nb-option value="French Polynesia">French Polynesia</nb-option>
+                          <nb-option value="French Southern Territories">French Southern Territories</nb-option>
+                          <nb-option value="Gabon">Gabon</nb-option>
+                          <nb-option value="Gambia">Gambia</nb-option>
+                          <nb-option value="Georgia">Georgia</nb-option>
+                          <nb-option value="Germany">Germany</nb-option>
+                          <nb-option value="Ghana">Ghana</nb-option>
+                          <nb-option value="Gibraltar">Gibraltar</nb-option>
+                          <nb-option value="Greece">Greece</nb-option>
+                          <nb-option value="Greenland">Greenland</nb-option>
+                          <nb-option value="Grenada">Grenada</nb-option>
+                          <nb-option value="Guadeloupe">Guadeloupe</nb-option>
+                          <nb-option value="Guam">Guam</nb-option>
+                          <nb-option value="Guatemala">Guatemala</nb-option>
+                          <nb-option value="Guernsey">Guernsey</nb-option>
+                          <nb-option value="Guinea">Guinea</nb-option>
+                          <nb-option value="Guinea-bissau">Guinea-bissau</nb-option>
+                          <nb-option value="Guyana">Guyana</nb-option>
+                          <nb-option value="Haiti">Haiti</nb-option>
+                          <nb-option value="Heard Island and Mcdonald Islands">Heard Island and Mcdonald Islands</nb-option>
+                          <nb-option value="Holy See (Vatican City State)">Holy See (Vatican City State)</nb-option>
+                          <nb-option value="Honduras">Honduras</nb-option>
+                          <nb-option value="Hong Kong">Hong Kong</nb-option>
+                          <nb-option value="Hungary">Hungary</nb-option>
+                          <nb-option value="Iceland">Iceland</nb-option>
+                          <nb-option value="India">India</nb-option>
+                          <nb-option value="Indonesia">Indonesia</nb-option>
+                          <nb-option value="Iran, Islamic Republic of">Iran, Islamic Republic of</nb-option>
+                          <nb-option value="Iraq">Iraq</nb-option>
+                          <nb-option value="Ireland">Ireland</nb-option>
+                          <nb-option value="Isle of Man">Isle of Man</nb-option>
+                          <nb-option value="Israel">Israel</nb-option>
+                          <nb-option value="Italy">Italy</nb-option>
+                          <nb-option value="Jamaica">Jamaica</nb-option>
+                          <nb-option value="Japan">Japan</nb-option>
+                          <nb-option value="Jersey">Jersey</nb-option>
+                          <nb-option value="Jordan">Jordan</nb-option>
+                          <nb-option value="Kazakhstan">Kazakhstan</nb-option>
+                          <nb-option value="Kenya">Kenya</nb-option>
+                          <nb-option value="Kiribati">Kiribati</nb-option>
+                          <nb-option value="Korea, Democratic People's Republic of">Korea, Democratic People's Republic of</nb-option>
+                          <nb-option value="Korea, Republic of">Korea, Republic of</nb-option>
+                          <nb-option value="Kuwait">Kuwait</nb-option>
+                          <nb-option value="Kyrgyzstan">Kyrgyzstan</nb-option>
+                          <nb-option value="Lao People's Democratic Republic">Lao People's Democratic Republic</nb-option>
+                          <nb-option value="Latvia">Latvia</nb-option>
+                          <nb-option value="Lebanon">Lebanon</nb-option>
+                          <nb-option value="Lesotho">Lesotho</nb-option>
+                          <nb-option value="Liberia">Liberia</nb-option>
+                          <nb-option value="Libyan Arab Jamahiriya">Libyan Arab Jamahiriya</nb-option>
+                          <nb-option value="Liechtenstein">Liechtenstein</nb-option>
+                          <nb-option value="Lithuania">Lithuania</nb-option>
+                          <nb-option value="Luxembourg">Luxembourg</nb-option>
+                          <nb-option value="Macao">Macao</nb-option>
+                          <nb-option value="Macedonia, The Former Yugoslav Republic of">Macedonia, The Former Yugoslav Republic of</nb-option>
+                          <nb-option value="Madagascar">Madagascar</nb-option>
+                          <nb-option value="Malawi">Malawi</nb-option>
+                          <nb-option value="Malaysia">Malaysia</nb-option>
+                          <nb-option value="Maldives">Maldives</nb-option>
+                          <nb-option value="Mali">Mali</nb-option>
+                          <nb-option value="Malta">Malta</nb-option>
+                          <nb-option value="Marshall Islands">Marshall Islands</nb-option>
+                          <nb-option value="Martinique">Martinique</nb-option>
+                          <nb-option value="Mauritania">Mauritania</nb-option>
+                          <nb-option value="Mauritius">Mauritius</nb-option>
+                          <nb-option value="Mayotte">Mayotte</nb-option>
+                          <nb-option value="Mexico">Mexico</nb-option>
+                          <nb-option value="Micronesia, Federated States of">Micronesia, Federated States of</nb-option>
+                          <nb-option value="Moldova, Republic of">Moldova, Republic of</nb-option>
+                          <nb-option value="Monaco">Monaco</nb-option>
+                          <nb-option value="Mongolia">Mongolia</nb-option>
+                          <nb-option value="Montenegro">Montenegro</nb-option>
+                          <nb-option value="Montserrat">Montserrat</nb-option>
+                          <nb-option value="Morocco">Morocco</nb-option>
+                          <nb-option value="Mozambique">Mozambique</nb-option>
+                          <nb-option value="Myanmar">Myanmar</nb-option>
+                          <nb-option value="Namibia">Namibia</nb-option>
+                          <nb-option value="Nauru">Nauru</nb-option>
+                          <nb-option value="Nepal">Nepal</nb-option>
+                          <nb-option value="Netherlands">Netherlands</nb-option>
+                          <nb-option value="Netherlands Antilles">Netherlands Antilles</nb-option>
+                          <nb-option value="New Caledonia">New Caledonia</nb-option>
+                          <nb-option value="New Zealand">New Zealand</nb-option>
+                          <nb-option value="Nicaragua">Nicaragua</nb-option>
+                          <nb-option value="Niger">Niger</nb-option>
+                          <nb-option value="Nigeria">Nigeria</nb-option>
+                          <nb-option value="Niue">Niue</nb-option>
+                          <nb-option value="Norfolk Island">Norfolk Island</nb-option>
+                          <nb-option value="Northern Mariana Islands">Northern Mariana Islands</nb-option>
+                          <nb-option value="Norway">Norway</nb-option>
+                          <nb-option value="Oman">Oman</nb-option>
+                          <nb-option value="Pakistan">Pakistan</nb-option>
+                          <nb-option value="Palau">Palau</nb-option>
+                          <nb-option value="Palestinian Territory, Occupied">Palestinian Territory, Occupied</nb-option>
+                          <nb-option value="Panama">Panama</nb-option>
+                          <nb-option value="Papua New Guinea">Papua New Guinea</nb-option>
+                          <nb-option value="Paraguay">Paraguay</nb-option>
+                          <nb-option value="Peru">Peru</nb-option>
+                          <nb-option value="Philippines">Philippines</nb-option>
+                          <nb-option value="Pitcairn">Pitcairn</nb-option>
+                          <nb-option value="Poland">Poland</nb-option>
+                          <nb-option value="Portugal">Portugal</nb-option>
+                          <nb-option value="Puerto Rico">Puerto Rico</nb-option>
+                          <nb-option value="Qatar">Qatar</nb-option>
+                          <nb-option value="Reunion">Reunion</nb-option>
+                          <nb-option value="Romania">Romania</nb-option>
+                          <nb-option value="Russian Federation">Russian Federation</nb-option>
+                          <nb-option value="Rwanda">Rwanda</nb-option>
+                          <nb-option value="Saint Helena">Saint Helena</nb-option>
+                          <nb-option value="Saint Kitts and Nevis">Saint Kitts and Nevis</nb-option>
+                          <nb-option value="Saint Lucia">Saint Lucia</nb-option>
+                          <nb-option value="Saint Pierre and Miquelon">Saint Pierre and Miquelon</nb-option>
+                          <nb-option value="Saint Vincent and The Grenadines">Saint Vincent and The Grenadines</nb-option>
+                          <nb-option value="Samoa">Samoa</nb-option>
+                          <nb-option value="San Marino">San Marino</nb-option>
+                          <nb-option value="Sao Tome and Principe">Sao Tome and Principe</nb-option>
+                          <nb-option value="Saudi Arabia">Saudi Arabia</nb-option>
+                          <nb-option value="Senegal">Senegal</nb-option>
+                          <nb-option value="Serbia">Serbia</nb-option>
+                          <nb-option value="Seychelles">Seychelles</nb-option>
+                          <nb-option value="Sierra Leone">Sierra Leone</nb-option>
+                          <nb-option value="Singapore">Singapore</nb-option>
+                          <nb-option value="Slovakia">Slovakia</nb-option>
+                          <nb-option value="Slovenia">Slovenia</nb-option>
+                          <nb-option value="Solomon Islands">Solomon Islands</nb-option>
+                          <nb-option value="Somalia">Somalia</nb-option>
+                          <nb-option value="South Africa">South Africa</nb-option>
+                          <nb-option value="South Georgia and The South Sandwich Islands">South Georgia and The South Sandwich Islands</nb-option>
+                          <nb-option value="Spain">Spain</nb-option>
+                          <nb-option value="Sri Lanka">Sri Lanka</nb-option>
+                          <nb-option value="Sudan">Sudan</nb-option>
+                          <nb-option value="Suriname">Suriname</nb-option>
+                          <nb-option value="Svalbard and Jan Mayen">Svalbard and Jan Mayen</nb-option>
+                          <nb-option value="Swaziland">Swaziland</nb-option>
+                          <nb-option value="Sweden">Sweden</nb-option>
+                          <nb-option value="Switzerland">Switzerland</nb-option>
+                          <nb-option value="Syrian Arab Republic">Syrian Arab Republic</nb-option>
+                          <nb-option value="Taiwan, Province of China">Taiwan, Province of China</nb-option>
+                          <nb-option value="Tajikistan">Tajikistan</nb-option>
+                          <nb-option value="Tanzania, United Republic of">Tanzania, United Republic of</nb-option>
+                          <nb-option value="Thailand">Thailand</nb-option>
+                          <nb-option value="Timor-leste">Timor-leste</nb-option>
+                          <nb-option value="Togo">Togo</nb-option>
+                          <nb-option value="Tokelau">Tokelau</nb-option>
+                          <nb-option value="Tonga">Tonga</nb-option>
+                          <nb-option value="Trinidad and Tobago">Trinidad and Tobago</nb-option>
+                          <nb-option value="Tunisia">Tunisia</nb-option>
+                          <nb-option value="Turkey">Turkey</nb-option>
+                          <nb-option value="Turkmenistan">Turkmenistan</nb-option>
+                          <nb-option value="Turks and Caicos Islands">Turks and Caicos Islands</nb-option>
+                          <nb-option value="Tuvalu">Tuvalu</nb-option>
+                          <nb-option value="Uganda">Uganda</nb-option>
+                          <nb-option value="Ukraine">Ukraine</nb-option>
+                          <nb-option value="United Arab Emirates">United Arab Emirates</nb-option>
+                          <nb-option value="United Kingdom">United Kingdom</nb-option>
+                          <nb-option value="United States">United States</nb-option>
+                          <nb-option value="United States Minor Outlying Islands">United States Minor Outlying Islands</nb-option>
+                          <nb-option value="Uruguay">Uruguay</nb-option>
+                          <nb-option value="Uzbekistan">Uzbekistan</nb-option>
+                          <nb-option value="Vanuatu">Vanuatu</nb-option>
+                          <nb-option value="Venezuela">Venezuela</nb-option>
+                          <nb-option value="Viet Nam">Viet Nam</nb-option>
+                          <nb-option value="Virgin Islands, British">Virgin Islands, British</nb-option>
+                          <nb-option value="Virgin Islands, U.S.">Virgin Islands, U.S.</nb-option>
+                          <nb-option value="Wallis and Futuna">Wallis and Futuna</nb-option>
+                          <nb-option value="Western Sahara">Western Sahara</nb-option>
+                          <nb-option value="Yemen">Yemen</nb-option>
+                          <nb-option value="Zambia">Zambia</nb-option>
+                          <nb-option value="Zimbabwe">Zimbabwe</nb-option>
+                        </nb-select>
+                  </div>
+                  <div *ngIf="f.submitted && !country.valid" class="alert-warning">Country is required</div>
+                </div>
+               
+                <div class="col-sm-3">
+                  <div class="form-group"  [ngClass]="{ 'has-error': f.submitted && !city.valid }">
+                      <label for="inputEmail1" class="label col-sm-3 col-form-label"></label>
+                    <input type="text" nbInput fullWidth id="city" placeholder="City" [(ngModel)]="model.city" #city="ngModel" name="city" required >
+                  </div>
+                  <div *ngIf="f.submitted && !city.valid" class="alert-warning">City is required</div>
+                </div>
+              
+                <div class="col-sm-3">
+                    <div class="form-group"  [ngClass]="{ 'has-error': f.submitted && !state.valid }">
+                        <label for="inputEmail1" class="label col-sm-3 col-form-label"></label>
+                      <input type="text" nbInput fullWidth id="state" placeholder="State / Province" [(ngModel)]="model.state" name="state" #state="ngModel" required >
+                    </div>
+                    <div *ngIf="f.submitted && !state.valid" class="alert-warning">State is required</div>
+                  </div>
+                 
+                  <div class="col-sm-3">
+                    <div class="form-group"  [ngClass]="{ 'has-error': f.submitted && !postal_code.valid }">
+                        <label for="inputEmail1" class="label col-sm-3 col-form-label"></label>
+                      <input type="text" nbInput fullWidth id="postal_code" placeholder="Zip / Postal Code" [(ngModel)]="model.postal_code" name="postal_code" #postal_code="ngModel" required >
+                    </div>
+                    <div *ngIf="f.submitted && !postal_code.valid" class="alert-warning">Postal Code is required</div>
+                  </div>
+                
+              </div>
+              <div class="row">
+                  <div class="col-sm-6">
+                    <div class="form-group"  [ngClass]="{ 'has-error': f.submitted && !address1.valid }">
+                        <label for="inputEmail1" class="label col-sm-3 col-form-label"></label>
+                      <input type="text" nbInput fullWidth id="address1" placeholder="Address 1" [(ngModel)]="model.address1" name="address1" #address1="ngModel" >
+                    </div>
+                  </div>
+          
+                  <div class="col-sm-6">
+                      <div class="form-group"  [ngClass]="{ 'has-error': f.submitted && !address2.valid }">
+                          <label for="inputEmail1" class="label col-sm-3 col-form-label"></label>
+                        <input type="text" nbInput fullWidth id="address2" placeholder="Address 2"  [(ngModel)]="model.address2" name="address2" #address2="ngModel" >
+                      </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group"  [ngClass]="{ 'has-error': f.submitted && !phone.valid }">
+                            <label for="inputEmail1" class="label col-sm-3 col-form-label"></label>
+                          <input type="text" nbInput fullWidth id="phone" placeholder="Phone"  [(ngModel)]="model.phone" name="phone" #phone="ngModel" required>
+                        </div>
+                        <div *ngIf="f.submitted && !phone.valid" class="alert-warning">Phone Number is required</div>
+                      </div>
+                     
+                      <div class="col-sm-6">
+                        <div class="form-group"  [ngClass]="{ 'has-error': f.submitted && !email.valid }">
+                            <label for="inputEmail1" class="label col-sm-3 col-form-label"></label>
+                          <input type="text" nbInput fullWidth id="email" placeholder="Email" [(ngModel)]="model.email" name="email" #email="ngModel" required>
+                        </div>
+                        <div *ngIf="f.submitted && !email.valid" class="alert-warning">Email is required</div>
+                      </div>
+                    
+                </div>
+              <button type="submit" class="btn btn-outline-success" data-dismiss="modal" nbButton>Submit</button>
+              <button class="btn btn-outline-danger" (click)="ref.close()" #closeAddExpenseModal>Cancel</button>
+            </form>
+            </nb-card-body>
+           
+          </nb-card>
+    </ng-template>
+
+
+    <!-- Update Customer Details -->
+
+    <ng-template #updatedialog let-data let-ref="dialogRef" fullWidth>
+        <nb-card>
+            <nb-card-header>Edit Customer
+                <nb-icon class="icon-set" style="float: right"  (click)="onCloseModal()" icon="close-outline" status="warning"></nb-icon>
+            </nb-card-header>
+            <nb-card-body>
+            <form class="register-form" name="form" (ngSubmit)="f.form.valid && updateCustomer()" #f="ngForm" novalidate class="form">
+              <div class="row">
+                <input type="hidden" [(ngModel)]="model.update_custo_id" name="update_custo_id" #update_custo_id="ngModel">
+                <div class="col-sm-12">
+                  <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !update_title.valid }">
+                      <label for="inputEmail1" class="label col-sm-3 col-form-label"></label>
+                    <input type="text" [disabled]="editoption" nbInput fullWidth id="update_title" placeholder="Title" [(ngModel)]="model.update_title" name="update_title" #update_title="ngModel" required >
+                  </div>
+                  <div *ngIf="f.submitted && !update_title.valid" class="alert-warning">Title is required</div>
+                </div>
+              
+                <div class="col-sm-12">
+                  <div class="form-group"  [ngClass]="{ 'has-error': f.submitted && !update_desc.valid }">
+                      <label for="inputEmail1" class="label col-sm-3 col-form-label"></label>
+                    <textarea rows="5" [disabled]="editoption" nbInput fullWidth shape="round"  placeholder="Description" [(ngModel)]="model.update_desc" name="update_desc" #update_desc="ngModel" required ></textarea>
+                  </div>
+                  <div *ngIf="f.submitted && !update_desc.valid" class="alert-warning">Description is required</div>
+                </div>
+               
+              </div>
+              <div class="row">
+                <div class="col-sm-3">
+                  <div class="form-group"  [ngClass]="{ 'has-error': f.submitted && !update_country.valid }">
+                      <label for="inputEmail1" class="label col-sm-3 col-form-label"></label>
+                      <nb-select selected="1" [disabled]="editoption" fullWidth [(ngModel)]="model.update_country" #update_country="ngModel" name="update_country" required >
+                          <nb-option value="1" hidden>Country</nb-option>
+                          <nb-option value="2">Option 1</nb-option>
+                          <nb-option value="3">Option 2</nb-option>
+                        </nb-select>
+                  </div>
+                  <div *ngIf="f.submitted && !update_country.valid" class="alert-warning">Country is required</div>
+                </div>
+               
+                <div class="col-sm-3">
+                  <div class="form-group"  [ngClass]="{ 'has-error': f.submitted && !update_city.valid }">
+                      <label for="inputEmail1" class="label col-sm-3 col-form-label"></label>
+                    <input type="text" [disabled]="editoption" nbInput fullWidth id="update_city" placeholder="City" [(ngModel)]="model.update_city" #update_city="ngModel" name="update_city" required >
+                  </div>
+                  <div *ngIf="f.submitted && !update_city.valid" class="alert-warning">City is required</div>
+                </div>
+              
+                <div class="col-sm-3">
+                    <div class="form-group"  [ngClass]="{ 'has-error': f.submitted && !update_state.valid }">
+                        <label for="inputEmail1" class="label col-sm-3 col-form-label"></label>
+                      <input type="text" [disabled]="editoption" nbInput fullWidth id="update_state" placeholder="State / Province" [(ngModel)]="model.update_state" name="update_state" #update_state="ngModel" required >
+                    </div>
+                    <div *ngIf="f.submitted && !update_state.valid" class="alert-warning">State is required</div>
+                  </div>
+                 
+                  <div class="col-sm-3">
+                    <div class="form-group"  [ngClass]="{ 'has-error': f.submitted && !update_postal_code.valid }">
+                        <label for="inputEmail1" class="label col-sm-3 col-form-label"></label>
+                      <input type="text" [disabled]="editoption" nbInput fullWidth id="update_postal_code" placeholder="Zip / Postal Code" [(ngModel)]="model.update_postal_code" name="update_postal_code" #update_postal_code="ngModel" required >
+                    </div>
+                    <div *ngIf="f.submitted && !update_postal_code.valid" class="alert-warning">Postal Code is required</div>
+                  </div>
+                
+              </div>
+              <div class="row">
+                  <div class="col-sm-6">
+                    <div class="form-group"  [ngClass]="{ 'has-error': f.submitted && !update_address1.valid }">
+                        <label for="inputEmail1" class="label col-sm-3 col-form-label"></label>
+                      <input type="text" [disabled]="editoption" nbInput fullWidth id="update_address1" placeholder="Address 1" [(ngModel)]="model.update_address1" name="update_address1" #update_address1="ngModel" >
+                    </div>
+                  </div>
+          
+                  <div class="col-sm-6">
+                      <div class="form-group"  [ngClass]="{ 'has-error': f.submitted && !update_address2.valid }">
+                          <label for="inputEmail1" class="label col-sm-3 col-form-label"></label>
+                        <input type="text" [disabled]="editoption" nbInput fullWidth id="update_address2" placeholder="Address 2"  [(ngModel)]="model.update_address2" name="update_address2" #update_address2="ngModel" >
+                      </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group"  [ngClass]="{ 'has-error': f.submitted && !update_phone.valid }">
+                            <label for="inputEmail1" class="label col-sm-3 col-form-label"></label>
+                          <input type="text" [disabled]="editoption" nbInput fullWidth id="update_phone" placeholder="Phone"  [(ngModel)]="model.update_phone" name="update_phone" #update_phone="ngModel" required>
+                        </div>
+                        <div *ngIf="f.submitted && !update_phone.valid" class="alert-warning">Phone Number is required</div>
+                      </div>
+                     
+                      <div class="col-sm-6">
+                        <div class="form-group"  [ngClass]="{ 'has-error': f.submitted && !update_email.valid }">
+                            <label for="inputEmail1" class="label col-sm-3 col-form-label"></label>
+                          <input type="text" [disabled]="editoption" nbInput fullWidth id="update_email" placeholder="Email" [(ngModel)]="model.update_email" name="update_email" #update_email="ngModel" required>
+                        </div>
+                        <div *ngIf="f.submitted && !update_email.valid" class="alert-warning">Email is required</div>
+                      </div>
+                    
+                </div>
+                <button *ngIf="editoption" class="btn btn-primary btn-round" (click)="editCust()">Edit Customer</button>
+                <button *ngIf="updatebutton" type="submit" class="btn btn-primary btn-round">Save Changes</button>&nbsp;&nbsp;
+                <button class="btn btn-outline-danger" id="closeBTN"  (click)="ref.close()" >Cancel</button>
+            </form>
+            </nb-card-body>
+           
+          </nb-card>
+    </ng-template>
+      

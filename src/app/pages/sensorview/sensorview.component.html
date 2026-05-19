@@ -1,0 +1,28 @@
+<nb-card>
+        <nb-card-body>
+                <p class="col-sm-4">Sensor : {{d_name}}</p>
+                <div class="row" *ngIf="device_name">
+                        <div class="col-lg-6" style="padding-left: 40px;">
+                            <nb-card>
+                              <nb-card-header>Temperature</nb-card-header>
+                              <nb-card-body>
+                                <chart type="line" [data]="data" [options]="options"></chart>
+                              </nb-card-body>
+                            </nb-card>
+                          </div>
+                          <div class="col-lg-6" style="padding-left: 25px;" *ngIf=viewhumchart>
+                            <nb-card>
+                              <nb-card-header>Relative Humidity</nb-card-header>
+                              <nb-card-body>
+                                <chart type="line" [data]="humdata" [options]="options1"></chart>
+                              </nb-card-body>
+                            </nb-card>
+                          </div>
+                    </div>
+        <br>
+        <ng2-smart-table [settings]="settings" [source]="source">
+        </ng2-smart-table>
+        </nb-card-body>
+    </nb-card>
+
+    

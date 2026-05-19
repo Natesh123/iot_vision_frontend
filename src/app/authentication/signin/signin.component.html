@@ -1,0 +1,54 @@
+<ngx-blank-column-layout>
+   
+    <router-outlet>
+
+    <link rel="stylesheet" href="../../../assets/fonts/material-icon/css/material-design-iconic-font.css">
+    <div class="main">
+
+      
+        <!-- Sing in  Form -->
+        <section class="sign-in">
+            <div class="container">
+                <div class="signin-content">
+                    <!-- <div class="signin-image">
+                        <figure><img src="../../../assets/images/signin-image.jpg" alt="sing up image"></figure>
+                        <a routerLink="/authentication/signup" class="signup-image-link" style="text-decoration: underline;">Create an account</a> 
+                    </div> -->
+                    
+                    <div class="signin-form">
+                        <h6 style="margin-bottom: 21px;font-size: 120%" class="form-title"><img style="width: 15%;" src="../../../assets/images/logo.jpg" alt="sing up image"> Environmental Monitoring System</h6>
+                        <h6 class="form-title">Login</h6>
+                        <form class="register-form" name="form" (ngSubmit)="f.form.valid && login()" #f="ngForm" novalidate class="form">
+                            <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !email.valid }">
+                                <label style="position: absolute;" for="your_name"><i class="fa fa-user-circle"></i></label>
+                                <input type="text"  name="email" [(ngModel)]="model.email" #email="ngModel" required placeholder="Your Username"/>
+                            </div>
+                            <div *ngIf="f.submitted && !email.valid" class="alert-warning">Username is required</div>
+                            <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !password.valid }">
+                                <label style="position: absolute;"  for="your_pass"><i class="fa fa-lock"></i></label>
+                                <input type="password"  name="password" [(ngModel)]="model.password" #password="ngModel" required placeholder="Password"/>
+                            </div>
+                            <div *ngIf="f.submitted && !password.valid" class="alert-warning">Password is required</div>
+                            
+                            <div class="form-group form-button">
+                                <input type="submit" name="signin" id="signin" class="form-submit" value="Log in"/>
+                            </div>
+                        </form>
+                        <!-- <div class="social-login">
+                            <span class="social-label">Or login with</span>
+                            <ul class="socials">
+                                <li><a href="#"><i class="display-flex-center zmdi zmdi-facebook"></i></a></li>
+                                <li><a href="#"><i class="display-flex-center zmdi zmdi-twitter"></i></a></li>
+                                <li><a href="#"><i class="display-flex-center zmdi zmdi-google"></i></a></li>
+                            </ul>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+
+    </router-outlet>
+  </ngx-blank-column-layout>

@@ -1,0 +1,180 @@
+<nb-tabset  (changeTab)="changeTab()">
+<nb-tab tabTitle=" Sensor Report" >
+    <nb-card>
+        <nb-card-body>
+        <div class="row" >
+            <div class="col-md-4" *ngIf = "role == 0 || role == 1 || role == 2 || role == 3 || role == 4 || role == 6">
+                    <p class="col-sm-12">Sensors </p>
+                    <nb-select [selected]="1" style="width: 95%;" status="primary" [(ngModel)]="model.device_id" name="device_id" #device_id="ngModel">
+                        <nb-option *ngFor="let sensors of sensorData" [value]="sensors"> {{ sensors.device_name }}</nb-option>
+                    </nb-select>
+            </div>
+            <div class="col-md-4" *ngIf = "role == 5">
+              <p class="col-sm-12">Sensors </p>
+              <nb-select [selected]="1" style="width: 95%;" status="primary" [(ngModel)]="model.device_id" name="device_id" #device_id="ngModel">
+                  <nb-option *ngFor="let RMdash of RMdashData" [value]="RMdash"> {{ RMdash.device_name }}</nb-option>
+              </nb-select>
+            </div>
+            <div class="col-md-4">
+                    <p class="col-sm-12">Date Range</p>
+                    <input nbInput placeholder="Choose Date" [nbDatepicker]="rangepicker" [(ngModel)]="model.choosedDate" name="choosedDate" #choosedDate="ngModel">
+                    <nb-rangepicker #rangepicker ></nb-rangepicker>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+           </div>
+             <div class="col-md-2">
+               <p class="col-sm-12"></p>
+                 <button type="submit" class="btn btn-outline-success" style="margin-top: 21px !important; margin-left: -186px !important;" (click)= "getSensorReport()" nbButton>Submit</button>
+            </div>
+            <div class="col-md-2">
+                <button class="btn btn-outline-success"  *ngIf="graphsensorEnable" style="float: right;" (click)="viewPDF(1);" nbButton>PDF View</button>
+            </div>
+        </div>
+        <br>
+        <nb-card-body>
+            <div class="row">
+                <p class="col-sm-4" *ngIf=sensor_device_name>Sensor : {{sensor_device_name}}</p>
+
+                <!-- <input type="button" class="col-md-2" *ngIf="graphsensorEnable" style="float: right;" (click)="navigate(1);" value="Graph"> -->
+            </div>
+        </nb-card-body>
+        <br>
+                <div class="row" *ngIf=graphsensorEnable  >
+                        <div class="col-lg-6" style="padding-left: 40px;">
+                            <nb-card>
+                              <nb-card-header>Temperature</nb-card-header>
+                              <nb-card-body>
+                                <chart type="line" [data]="data" [options]="options"></chart>
+                              </nb-card-body>
+                            </nb-card>
+                          </div>
+                          <div class="col-lg-6" style="padding-left: 25px;" *ngIf=viewhumgraph>
+                            <nb-card>
+                              <nb-card-header>Relative Humidity</nb-card-header>
+                              <nb-card-body>
+                                <chart type="line" [data]="humdata" [options]="options1"></chart>
+                              </nb-card-body>
+                            </nb-card>
+                          </div>
+                    </div>
+        <ng2-smart-table [settings]="settings" [source]="source">
+        </ng2-smart-table>
+        </nb-card-body>
+    </nb-card>
+</nb-tab>
+<nb-tab tabTitle="AHU Report" *ngIf="ahu_report_view">
+    <nb-card>
+        <nb-card-body>
+                <div class="row">
+                        <div class="col-md-4">
+                                <p class="col-sm-12">AHU Sensors </p>
+                                <nb-select [selected]="0" style="width: 95%;" status="primary" [(ngModel)]="model.ahudevice_id" name="ahudevice_id" #ahudevice_id="ngModel">
+                                    <nb-option *ngFor="let ahusensors of AHUsensorData" [value]="ahusensors"> {{ ahusensors.device_name }}</nb-option>
+                                </nb-select>
+                        </div>
+                        <div class="col-md-4">
+                                <p class="col-sm-12">Date Range</p>
+                                <input nbInput placeholder="Choose Date" [nbDatepicker]="ahurangepicker" [(ngModel)]="model.ahuchoosedDate" name="ahuchoosedDate" #ahuchoosedDate="ngModel">
+                                <nb-rangepicker #ahurangepicker ></nb-rangepicker>
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                <button type="submit" class="btn btn-outline-success" (click)= "getAHUSensorReport()" nbButton>Submit</button>
+                        </div>
+                        <div class="col-md-4">
+                            <button class="btn btn-outline-success"  *ngIf="graphEnable" style="float: right;" (click)="viewPDF(2);" nbButton>PDF View</button>
+                        </div>
+                    </div>
+                    <br>
+                    <nb-card-body>
+                        <div class="row">
+                            <p class="col-sm-4" *ngIf=ausensor_device_name>Sensor : {{ausensor_device_name}}</p>
+
+                            <!-- <input class="btn btn-outline-success" type="button" *ngIf="graphEnable" style="float: right;" (click)="navigate(2);" value="Graph"> -->
+                        </div>
+                    </nb-card-body>
+                    <br>
+
+                    <div class="row" *ngIf=graphEnable>
+                        <div class="col-lg-6" style="padding-left: 40px;">
+                            <nb-card>
+                              <nb-card-header>Temperature</nb-card-header>
+                              <nb-card-body>
+                                <chart type="line" [data]="data" [options]="options"></chart>
+                              </nb-card-body>
+                            </nb-card>
+                          </div>
+                          <div class="col-lg-6" style="padding-left: 25px;">
+                            <nb-card>
+                              <nb-card-header>Relative Humidity</nb-card-header>
+                              <nb-card-body>
+                                <chart type="line" [data]="humdata" [options]="options1"></chart>
+                              </nb-card-body>
+                            </nb-card>
+                          </div>
+                    </div>
+            <ng2-smart-table [settings]="ahusettings" [source]="ahusource" (deleteConfirm)="onDeleteConfirm($event)">
+            </ng2-smart-table>
+        </nb-card-body>
+        </nb-card>
+</nb-tab>
+<nb-tab tabTitle="Particals Sensor Report" >
+    <nb-card>
+        <nb-card-body>
+        <div class="row" >
+            <div class="col-md-4" *ngIf = "role == 0 || role == 1 || role == 2 || role == 3 || role == 4 || role == 6">
+                    <p class="col-sm-12">Sensors </p>
+                    <nb-select [selected]="1" style="width: 95%;" status="primary" [(ngModel)]="particalmodel.device_id" name="device_id" #device_id="ngModel">
+                        <nb-option *ngFor="let sensors of particalsensorData" [value]="sensors"> {{ sensors.device_name }}</nb-option>
+                    </nb-select>
+            </div>
+            <div class="col-md-4" *ngIf = "role == 5">
+              <p class="col-sm-12">Sensors </p>
+              <nb-select [selected]="1" style="width: 95%;" status="primary" [(ngModel)]="particalmodel.device_id" name="device_id" #device_id="ngModel">
+                  <nb-option *ngFor="let RMdash of RMdashData" [value]="RMdash"> {{ RMdash.device_name }}</nb-option>
+              </nb-select>
+            </div>
+            <div class="col-md-4">
+                    <p class="col-sm-12">Date Range</p>
+                    <input nbInput placeholder="Choose Date" [nbDatepicker]="particalrangepicker" [(ngModel)]="particalmodel.choosedDate" name="particalchoosedDate" #choosedDate="ngModel">
+                    <nb-rangepicker #particalrangepicker ></nb-rangepicker>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+           </div>
+             <div class="col-md-2">
+               <p class="col-sm-12"></p>
+                 <button type="submit" class="btn btn-outline-success" style="margin-top: 21px !important; margin-left: -186px !important;" (click)= "getParticalSensorReport()" nbButton>Submit</button>
+            </div>
+            <div class="col-md-2">
+                <button class="btn btn-outline-success"  *ngIf="graphParticalsensorEnable" style="float: right;" (click)="viewPDF(3);" nbButton>PDF View</button>
+            </div>
+        </div>
+        <br>
+        <nb-card-body>
+            <div class="row">
+                <p class="col-sm-4" *ngIf=sensor_device_name>Sensor : {{partical_sensor_device_name}}</p>
+
+                <!-- <input type="button" class="col-md-2" *ngIf="graphsensorEnable" style="float: right;" (click)="navigate(1);" value="Graph"> -->
+            </div>
+        </nb-card-body>
+        <br>
+                <div class="row" *ngIf=graphParticalsensorEnable>
+                        <div class="col-lg-6" style="padding-left: 40px;">
+                            <nb-card>
+                              <nb-card-header>0.5 uM/Cu.M</nb-card-header>
+                              <nb-card-body>
+                                <chart type="line" [data]="data" [options]="options"></chart>
+                              </nb-card-body>
+                            </nb-card>
+                          </div>
+                          <div class="col-lg-6" style="padding-left: 25px;">
+                            <nb-card>
+                              <nb-card-header>5 uM/Cu.M</nb-card-header>
+                              <nb-card-body>
+                                <chart type="line" [data]="humdata" [options]="options1"></chart>
+                              </nb-card-body>
+                            </nb-card>
+                          </div>
+                    </div>
+        <ng2-smart-table [settings]="particalsettings" [source]="particalsource">
+        </ng2-smart-table>
+        </nb-card-body>
+    </nb-card>
+</nb-tab>
+      

@@ -1,0 +1,18 @@
+<div class="row">
+    <div class="col-lg-11" style="padding-left: 60px;">
+        <nb-card>
+          <nb-card-header>Temperature</nb-card-header>
+          <nb-card-body>
+            <chart type="line" [data]="data" [options]="options"></chart>
+          </nb-card-body>
+        </nb-card>
+      </div>
+      <div class="col-lg-11" style="padding-left: 60px;">
+        <nb-card>
+          <nb-card-header>Relative Humidity</nb-card-header>
+          <nb-card-body>
+            <chart type="line" [data]="humdata" [options]="options1"></chart>
+          </nb-card-body>
+        </nb-card>
+      </div>
+</div>

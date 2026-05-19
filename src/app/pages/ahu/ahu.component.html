@@ -1,0 +1,166 @@
+<div class="col-12 row" style="padding:10px;">
+ <div class="col-12 row" >
+        <div class="col-xxxl-2 col-xxl-2 col-lg-3 col-md-4 col-sm-6 tile-div"  *ngFor="let dash of dashData; let i = index">
+            <nb-card id="nbcard">
+              <nb-card-body class="card-body">
+                  <div>
+
+                     <a *ngIf="editstatus" href="javascript:void(0);" style="float:right" (click)="editdevicePopup(dash)"><nb-icon class="action-icon" nbTooltip="Edit Details" icon="options-2-outline" status="warning"></nb-icon></a>
+                     <a href="javascript:void(0);" style="float: right; text-decoration: none" (click)="copyToClipboard(dash.ahudevice_id)"><nb-icon class="action-icon" nbTooltip="Copy Device link" icon="clipboard-outline" status="warning"></nb-icon>&nbsp;&nbsp;</a>
+                       <nb-icon style="float:right;" *ngIf="intConversion(dash.device_min_temp) > intConversion(dash.device_temp) || intConversion(dash.device_max_temp) < intConversion(dash.device_temp)
+                      || intConversion(dash.device_min_pressure) > intConversion(dash.device_pressure) || intConversion(dash.device_max_pressure) < intConversion(dash.device_pressure)
+                      || intConversion(dash.device_min_humidity) > intConversion(dash.device_humidity) || intConversion(dash.device_max_humidity) < intConversion(dash.device_humidity)"
+                       class="icon-set" icon="alert-triangle-outline" status="danger"></nb-icon> 
+                     
+                  </div>
+                  <!-- Device Warning -->
+                <span class="h6 location">{{ dash.device_name }} 
+                  
+                  </span>
+                <span class="date">{{ dash.device_lastupdated | date:'dd-MM-yyyy hh:mm:ss a'}}</span>
+              
+              <div class="weekly-forecast" style="margin:10px 10px 10px 10px">
+                  <div class="day">
+                    <span class="caption">Temp</span>
+                    
+                       <i *ngIf="dash.device_temp == 00.00"
+                       class="weather-icon fas fa-thermometer-half" status="danger"></i>
+
+                    <i *ngIf="intConversion(dash.device_min_temp) > intConversion(dash.device_temp) || intConversion(dash.device_max_temp) < intConversion(dash.device_temp)"
+                       class="weather-icon fas fa-thermometer-half warning-msg" status="danger"></i>
+        
+                    <i *ngIf="intConversion(dash.device_min_temp) < intConversion(dash.device_temp) && intConversion(dash.device_max_temp) > intConversion(dash.device_temp)"
+                        class="weather-icon fas fa-thermometer-half icon-color" status="danger"></i>
+        
+                    <span class="temperature">{{ dash.device_temp |  number:'2.2-2' }} &deg;</span>
+                    <!-- <br>
+                     <span *ngIf="dash.device_min_temp == 0 && dash.device_max_temp == 0" class="parameter-value">---</span>
+                    <span *ngIf="dash.device_min_temp != 0 && dash.device_max_temp != 0" class="parameter-value small-font">{{dash.device_min_temp}} &deg; - {{dash.device_max_temp}} &deg;</span> -->
+                  </div>
+                  <div class="day">
+                    <span class="caption">Pressure</span>
+
+                      <i *ngIf="dash.device_pressure == 0"
+                       class="weather-icon fas fa-wind" status="danger"></i>
+
+                    <i *ngIf="intConversion(dash.device_min_pressure) > intConversion(dash.device_pressure) || intConversion(dash.device_max_pressure) < intConversion(dash.device_pressure)"
+                      class="weather-icon fas fa-wind warning-msg" status="danger"></i>
+                    <i *ngIf="intConversion(dash.device_min_pressure) < intConversion(dash.device_pressure) && intConversion(dash.device_max_pressure) > intConversion(dash.device_pressure)"
+                       class="weather-icon fas fa-wind icon-color" status="danger"></i>
+                    <span class="temperature">{{ dash.device_pressure | number }} Pa</span>
+                    
+                     <!-- <span *ngIf="dash.device_min_pressure == 0 && dash.device_max_pressure == 0" class="parameter-value">---</span>
+                    <span *ngIf="dash.device_min_pressure != 0 && dash.device_max_pressure != 0" class="parameter-value small-font">{{dash.device_min_pressure}} Pa - {{dash.device_max_pressure}} Pa</span> -->
+                  </div>
+                  <div class="day">
+                    <span class="caption">Humidity</span>
+
+                      <i *ngIf="dash.device_humidity == 0"
+                       class="weather-icon fas fa-tint" status="danger"></i>
+
+                    <i *ngIf="intConversion(dash.device_min_humidity) > intConversion(dash.device_humidity) || intConversion(dash.device_max_humidity) < intConversion(dash.device_humidity)"
+                      class="weather-icon fas fa-tint warning-msg" status="danger"></i>
+                    <i *ngIf="intConversion(dash.device_min_humidity) < intConversion(dash.device_humidity) && intConversion(dash.device_max_humidity) > intConversion(dash.device_humidity)"
+                       class="weather-icon fas fa-tint icon-color" status="danger"></i>
+                    <span class="temperature">{{ dash.device_humidity | number }} %</span>
+                    
+                     <!-- <span *ngIf="dash.device_min_humidity == 0 && dash.device_max_humidity == 0" class="parameter-value">---</span>
+                    <span *ngIf="dash.device_min_humidity != 0 && dash.device_max_humidity != 0" class="parameter-value small-font">{{dash.device_min_humidity}} % - {{dash.device_max_humidity}} %</span> -->
+                  </div>
+                </div>
+        <!-- 
+                <div class="today-details">
+                  <div class="parameter">
+                    <span class="caption parameter-name">min & max temp</span>
+                   
+                  
+                  </div>
+                  <div class="parameter">
+                    <span class="caption parameter-name">min & max pre</span>
+                   
+                  </div>
+                  <div class="parameter">
+                    <span class="caption parameter-name">min & max hum</span>
+                   
+                  </div>
+                </div>    -->
+               
+              </nb-card-body>
+            </nb-card>
+            
+    </div>
+  </div> 
+</div>
+    
+<div class="col-12 row" >
+
+    <ng-template #dialog let-data let-ref="dialogRef" fullWidth>
+        <nb-card>
+      
+            <nb-card-header>Edit Device Configuration
+                <nb-icon class="icon-set" style="float: right" id="closeBTN" (click)="ref.close()" icon="close-outline" status="warning"></nb-icon>
+            </nb-card-header>
+            <nb-card-body>
+            <form class="register-form" name="form" (ngSubmit)="f.form.valid && updateDevicesConfValue()" #f="ngForm" novalidate class="form">
+                <p class="col-sm-3">Temperature</p>
+              <div class="row">
+               <input type="hidden" id="device_id" [(ngModel)]="model.device_id" name="device_id" #device_id="ngModel" >
+                <div class="col-sm-6">
+                  
+                  <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !mintemp.valid }">
+                      
+                    <input type="text" nbInput fullWidth id="mintemp" placeholder="Min Temp" [(ngModel)]="model.mintemp" name="mintemp" #mintemp="ngModel" required >
+                  </div>
+                  <div *ngIf="f.submitted && !mintemp.valid" class="alert-warning">Minimum Temperature is required</div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !maxtemp.valid }">
+                        
+                      <input type="text" nbInput fullWidth id="maxtemp" placeholder="Max Temp" [(ngModel)]="model.maxtemp" name="maxtemp" #maxtemp="ngModel" required >
+                    </div>
+                    <div *ngIf="f.submitted && !maxtemp.valid" class="alert-warning">Maximum Temperature is required</div>
+                  </div>
+              </div>
+              <p class="col-sm-3">Pressure</p>
+              <div class="row">
+                  
+                  <div class="col-sm-6">
+                    <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !minpres.valid }">
+                      <input type="text" nbInput fullWidth id="minpres" placeholder="Min Pres" [(ngModel)]="model.minpres" name="minpres" #minpres="ngModel" required >
+                    </div>
+                    <div *ngIf="f.submitted && !minpres.valid" class="alert-warning">Minimum Pressure is required</div>
+                  </div>
+                  <div class="col-sm-6">
+                      <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !maxpres.valid }">
+                        <input type="text" nbInput fullWidth id="maxpres" placeholder="Max Pres" [(ngModel)]="model.maxpres" name="maxpres" #maxpres="ngModel" required >
+                      </div>
+                      <div *ngIf="f.submitted && !maxpres.valid" class="alert-warning">Maximum Pressure is required</div>
+                    </div>
+                </div>
+    
+                <p class="col-sm-3">Humidity</p>
+                <div class="row">
+                    
+                    <div class="col-sm-6">
+                      <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !minhum.valid }">
+                          
+                        <input type="text" nbInput fullWidth id="minhum" placeholder="Min Hum" [(ngModel)]="model.minhum" name="minhum" #minhum="ngModel" required >
+                      </div>
+                      <div *ngIf="f.submitted && !minhum.valid" class="alert-warning">Minimum Humidity is required</div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !maxhum.valid }">
+                            
+                          <input type="text" nbInput fullWidth id="maxhum" placeholder="Max Hum" [(ngModel)]="model.maxhum" name="maxhum" #maxhum="ngModel" required >
+                        </div>
+                        <div *ngIf="f.submitted && !maxhum.valid" class="alert-warning">Maximum Humidity is required</div>
+                      </div>
+                  </div>
+      
+              <button type="submit" class="btn btn-outline-success" data-dismiss="modal" nbButton>Submit</button>
+            </form>
+            </nb-card-body>
+           
+          </nb-card>
+      </ng-template>
+      

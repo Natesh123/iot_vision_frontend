@@ -1,0 +1,41 @@
+
+<div id="overlayer"></div>
+<span class="loader">
+  <span class="loader-inner"></span>
+</span>
+<nb-tabset>
+  <nb-tab tabTitle=" Sensor Alarm Log" >
+      <nb-card>
+        <nb-card-body>
+          <ng2-smart-table [settings]="settings"  (custom)="onCustomAction($event)" [source]="source">
+          </ng2-smart-table>
+        </nb-card-body>
+      </nb-card>
+  </nb-tab>
+  <nb-tab tabTitle="AHU Alarm Log" >
+      <nb-card>
+          <nb-card-body>
+            <ng2-smart-table [settings]="ahusettings" [source]="ahusource">
+            </ng2-smart-table>
+          </nb-card-body>
+        </nb-card>
+  </nb-tab>
+
+  <ng-template #dialog let-data let-ref="dialogRef">
+    <nb-card>
+      <nb-card-header>Activation Code</nb-card-header>
+      <nb-card-body>
+      <!-- <form class="register-form" name="form" (ngSubmit)="f.form.valid && activateAccount()" #f="ngForm" novalidate class="form">
+        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !activationcode.valid }">
+          <label for="your_name"><i class="fa fa-key"></i></label>
+          <input type="text"  name="activationcode" [(ngModel)]="model.activationcode" #activationcode="ngModel" required placeholder="Your Activation Code"/>
+      </div>
+      <div *ngIf="f.submitted && !activationcode.valid" class="alert-warning">Activation Code is required</div>
+      <div class="" style="float: right">
+      <button type="submit" class="btn btn-outline-success">Submit</button>&nbsp;&nbsp;
+      <button class="btn btn-outline-danger" (click)="ref.close()">Cancel</button>
+    </div>
+      </form> -->
+      </nb-card-body>
+    </nb-card>
+  </ng-template>

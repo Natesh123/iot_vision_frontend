@@ -1,0 +1,120 @@
+<a href="javascript:void(0);" class="float" (click)="addassetsPopup()" nbTooltip="Add New Device">
+    <i class="fa fa-plus my-float"></i>
+    </a>
+
+
+<div class="row">
+<div class="col-xxxl-3 col-xxl-4 col-lg-5 col-md-6" *ngFor="let asset of assets; let i = index">
+    
+ <nb-card>
+      <nb-card-header>
+          <nb-checkbox #custA></nb-checkbox>
+        <div style="float:right">
+            <a href="javascript:void(0);"><nb-icon class="icon-set" nbTooltip="Assign to Customer" icon="person-add-outline" status="warning"></nb-icon></a>
+            <a href="javascript:void(0);" (click)="deleteAssets(asset._id,asset.name)"><nb-icon class="icon-set" nbTooltip="Delete Asset" icon="trash-2-outline" status="warning"></nb-icon></a>
+        </div>
+      </nb-card-header>
+     
+      <nb-card-body  (click)="updateAssetPopup(asset._id)">
+          <a href="javascript:void(0);" class="no-underline">
+        <div class="">
+          <h6>{{ asset.name }}</h6>
+          <div class="">{{ asset.description }}</div>
+          <br>
+        </div>
+      </a>
+      </nb-card-body>
+    </nb-card>
+</div>
+</div>
+
+<ng-template #dialog let-data let-ref="dialogRef" fullWidth>
+    <nb-card>
+  
+        <nb-card-header>Add Assets
+            <nb-icon class="icon-set" style="float: right" (click)="ref.close()" icon="close-outline" status="warning"></nb-icon>
+        </nb-card-header>
+        <nb-card-body>
+        <form class="register-form" name="form" (ngSubmit)="f.form.valid && addAssets()" #f="ngForm" novalidate class="form">
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !name.valid }">
+                  <label for="inputEmail1" class="label col-sm-3 col-form-label"></label>
+                <input type="text" nbInput fullWidth id="name" placeholder="Name" [(ngModel)]="model.name" name="name" #name="ngModel" required >
+              </div>
+              <div *ngIf="f.submitted && !name.valid" class="alert-warning">Name is required</div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="form-group"  [ngClass]="{ 'has-error': f.submitted && !asset_type.valid }">
+                  <label for="inputEmail1" class="label col-sm-3 col-form-label"></label>
+                <input type="text" nbInput fullWidth id="asset_type" placeholder="Asset Type" [(ngModel)]="model.asset_type" #asset_type="ngModel" name="device_type" required >
+              </div>
+              <div *ngIf="f.submitted && !asset_type.valid" class="alert-warning">Asset Type is required</div>
+            </div>
+          
+              <div class="col-sm-12">
+                  <div class="form-group"  [ngClass]="{ 'has-error': f.submitted && !description.valid }">
+                      <label for="inputEmail1" class="label col-sm-3 col-form-label"></label>
+                    <textarea rows="5" nbInput fullWidth shape="round"  placeholder="Description" [(ngModel)]="model.description" name="description" #description="ngModel" required ></textarea>
+                  </div>
+                  <div *ngIf="f.submitted && !description.valid" class="alert-warning">Description is required</div>
+                </div>
+          </div>
+  
+          <button type="submit" class="btn btn-outline-success" data-dismiss="modal" nbButton>Submit</button>
+          <button class="btn btn-outline-danger" (click)="ref.close()" #closeAddExpenseModal>Cancel</button>
+        </form>
+        </nb-card-body>
+       
+      </nb-card>
+
+  </ng-template>
+
+
+  <!-- Update Asset Details -->
+
+  <ng-template #updatedialog let-data let-ref="dialogRef" fullWidth>
+      <nb-card>
+          <nb-card-header>Edit Asset
+              <nb-icon class="icon-set" style="float: right"  (click)="onCloseModal()" icon="close-outline" status="warning"></nb-icon>
+          </nb-card-header>
+          <nb-card-body>
+          <form class="register-form" name="form" (ngSubmit)="f.form.valid && updateAssetValue()" #f="ngForm" novalidate class="form">
+              <input type="hidden" [(ngModel)]="model.update_ass_id" name="update_ass_id" #update_ass_id="ngModel">
+              <div class="row">
+                  <div class="col-sm-12">
+                    <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !update_name.valid }">
+                        <label for="inputEmail1" class="label col-sm-3 col-form-label"></label>
+                      <input type="text" nbInput [disabled]="editoption" fullWidth id="update_name" placeholder="Name" [(ngModel)]="model.update_name" name="update_name" #update_name="ngModel" required >
+                    </div>
+                    <div *ngIf="f.submitted && !update_name.valid" class="alert-warning">Name is required</div>
+                  </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group"  [ngClass]="{ 'has-error': f.submitted && !update_asset_type.valid }">
+                            <label for="inputEmail1" class="label col-sm-3 col-form-label"></label>
+                          <input type="text" nbInput [disabled]="editoption" fullWidth id="update_asset_type" placeholder="Asset Type" [(ngModel)]="model.update_asset_type" #update_asset_type="ngModel" name="update_asset_type" required >
+                        </div>
+                        <div *ngIf="f.submitted && !update_asset_type.valid" class="alert-warning">Asset Type is required</div>
+                      </div>
+                    
+                    <div class="col-sm-12">
+                        <div class="form-group"  [ngClass]="{ 'has-error': f.submitted && !update_description.valid }">
+                            <label for="inputEmail1" class="label col-sm-3 col-form-label"></label>
+                          <textarea rows="5" nbInput [disabled]="editoption" fullWidth shape="round"  placeholder="Description" [(ngModel)]="model.update_description" name="update_description" #update_description="ngModel" required ></textarea>
+                        </div>
+                        <div *ngIf="f.submitted && !update_description.valid" class="alert-warning">Description is required</div>
+                      </div>
+                </div>
+              <button *ngIf="editoption" class="btn btn-primary btn-round" (click)="editDev()">Edit Asset</button>
+              <button *ngIf="updatebutton" type="submit" class="btn btn-primary btn-round">Save Changes</button>&nbsp;&nbsp;
+              <button class="btn btn-outline-danger" id="closeBTN"  (click)="ref.close()" >Cancel</button>
+          </form>
+          </nb-card-body>
+         
+        </nb-card>
+  </ng-template>
+    

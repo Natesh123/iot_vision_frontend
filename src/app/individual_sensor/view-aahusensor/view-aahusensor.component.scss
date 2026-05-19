@@ -1,0 +1,133 @@
+@import '../../@theme/styles/themes';
+@import '~bootstrap/scss/mixins/breakpoints';
+@import '~@nebular/theme/styles/global/breakpoints';
+
+
+
+@include nb-install-component() {
+
+  nb-tabset {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  :host ::ng-deep ngx-tab1, :host ::ng-deep ngx-tab2 {
+    display: block;
+    padding: 1rem 2rem;
+  }
+
+
+nb-badge{
+  display: none !important;
+}
+
+nb-card-body {
+  display: flex;
+  flex-direction: column;
+}
+
+.time_card{
+    width: 25% !important;
+    float: right;
+    position:relative;
+    margin-top: 0%;
+    margin-bottom: 0%;
+}
+.device_card{
+    height: 34.3rem !important;
+  }
+
+.alaram_card{
+    height: 30.3rem !important
+}
+
+.time_font{
+  font-size: 11px;
+  float: right;
+}
+
+.location,
+.date {
+  display: block;
+}
+
+.location {
+  margin-bottom: 0.1rem;
+}
+
+.today {
+  display: flex;
+  justify-content: space-around;
+}
+
+.today-temperature {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 2rem 1.5rem;
+}
+
+.today-icon {
+  color: nb-theme(color-primary-default);
+  font-size: 10rem;
+  line-height: 1;
+  margin-top: -4rem;
+  margin-left: auto;
+  margin-right: 0.4rem;
+}
+
+.today-details {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 1.3rem;
+}
+
+.parameter {
+  flex: 1 1 auto;
+  text-align: center;
+}
+
+.parameter-name,
+.parameter-value {
+  display: block;
+}
+
+.caption {
+  text-transform: uppercase;
+}
+
+.weekly-forecast {
+  display: flex;
+  justify-content: space-around;
+  margin: 30px 10px 10px 10px;
+}
+
+.day {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+.weather-icon {
+  font-size: 4.5rem !important;
+  line-height: 8.5rem;
+}
+
+.action-icon {
+  font-size: 1.4rem !important;
+}
+.span_color{
+  color: red;
+}
+
+.icon-color{
+  color: #5ed78f;
+
+}
+.heading-color{
+  color: black;
+}
+
+  
+}

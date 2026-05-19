@@ -1,0 +1,47 @@
+
+    <!-- <nb-tab tabTitle=" Sensor Details" > -->
+        <nb-card>
+            <nb-card-body>
+            <div class="row" >
+                <div class="col-md-4">
+                        <p class="col-sm-12">Sensors</p>
+                        <nb-select placeholder="Select Sensors" style="width: 95%;" status="primary" [(ngModel)]="model.device_id" name="device_id" #device_id="ngModel">
+                          <nb-option *ngFor="let sensors of sensorData" [value]="sensors"> {{ sensors.device_name }}</nb-option>
+                                <!-- <nb-option value="">Option empty</nb-option>
+                                <nb-option value="0">Option 0</nb-option>
+                                <nb-option value="1">Option 1</nb-option>
+                                <nb-option value="2">Option 2</nb-option>
+                                <nb-option value="3">Option 3</nb-option>
+                                <nb-option value="4">Option 4</nb-option> -->
+                              </nb-select>
+                        <!-- <nb-select [selected]="1" style="width: 95%;" status="primary" [(ngModel)]="model.device_id" name="device_id" #device_id="ngModel">
+                            <nb-option *ngFor="let sensors of sensorData" [value]="sensors"> {{ sensors.device_name }}</nb-option>
+                        </nb-select> -->
+                </div>
+        
+                <div class="col-md-4">
+                        <p class="col-sm-12">Date Range</p>
+                        <input nbInput placeholder="Choose Date" [nbDatepicker]="datepicker" [(ngModel)]="model.choosedDate" name="choosedDate" #choosedDate="ngModel">
+                      <nb-datepicker #datepicker></nb-datepicker>
+                      &nbsp;&nbsp;&nbsp;&nbsp;
+                    
+                 </div>
+               <div class="col-md-4">
+                   <p class="col-sm-12"></p>
+                 <button type="submit" class="btn btn-outline-primary" style="margin-top: 21px !important; margin-left: -186px !important;" (click)= "getSensorDetails()" nbButton>Submit</button>
+                </div>
+                
+              
+            </div>
+            <br>
+            <br>
+           
+            <ng2-smart-table [settings]="settings" [source]="source">
+            </ng2-smart-table>
+            <!-- <ng2-smart-table [settings]="settings" [source]="source"  (deleteConfirm)="onDeleteConfirm($event)">
+            </ng2-smart-table> -->
+            </nb-card-body>
+        </nb-card>
+    <!-- </nb-tab> -->
+  
+  

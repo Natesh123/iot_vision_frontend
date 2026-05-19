@@ -1,0 +1,23 @@
+<nb-card>
+  <nb-card-header>
+    Login and Logout Details
+  </nb-card-header>
+  <nb-card-body>
+  <div class="col-md-4" >
+    <!-- <p class="col-sm-12">Date Range</p> -->
+    <input nbInput placeholder="Choose Date" [nbDatepicker]="rangepicker" [(ngModel)]="model.choosedDate" name="choosedDate" #choosedDate="ngModel" >
+    <nb-rangepicker #rangepicker ></nb-rangepicker>
+    &nbsp;&nbsp;&nbsp;&nbsp;
+  
+   </div>
+
+    <div class="col-md-4">
+     <p class="col-sm-12"></p>
+     <button type="submit" class="btn btn-outline-success" (click)= "getDatewiseLoglist()" nbButton>Submit</button>
+    </div>
+</nb-card-body>
+  <nb-card-body>
+    <ng2-smart-table [settings]="settings" [source]="source" (deleteConfirm)="onDeleteConfirm($event)">
+    </ng2-smart-table>
+  </nb-card-body>
+</nb-card>

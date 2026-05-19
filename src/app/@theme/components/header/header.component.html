@@ -1,0 +1,58 @@
+<div class="header-container" >
+  <div class="logo-container" style="width: 10%;">
+    <a (click)="toggleSidebar()" style="padding-right: 0.25rem;" href="#" class="sidebar-toggle">
+      <nb-icon icon="menu-2-outline"></nb-icon>
+    </a>
+    
+
+ 
+  </div>
+  <img style="width: 35px;" src="../../../../assets/images/logo.jpg">
+  <a class="logo" style="padding:0px !important;font-size: 21px;  " href="javascript:void(0)" (click)="navigateHome()">GLOBAL PHARMA HEALTHCARE</a>
+</div>
+
+
+<div class="header-container">
+ 
+    <nb-select [selected]="room_id" (selectedChange)="changeRoom($event)" status="primary" *ngIf="user_role_based">
+        <nb-option value="1"> UNIT III</nb-option>
+        <nb-option value="2"> UNIT I</nb-option>
+        <nb-option value="3"> QCD/Micro</nb-option>
+      </nb-select>
+  <nb-actions size="small" >
+
+    <nb-action class="control-item" style="padding: 0 0.60rem;">
+      <nb-icon class="action-icon"  nbTooltip="This is a tooltip" nbTooltipIcon="home-outline" icon="loader-outline" status="warning" style="margin-top: -10%"></nb-icon>&nbsp;
+      <input class="tgl tgl-light" id="theme_mode" #theme_mode type="checkbox" (change)="changeTheme($event)" />
+      <label class="tgl-btn" for="theme_mode"></label>&nbsp;&nbsp; 
+      <nb-icon class="action-icon" icon="moon-outline" status="warning" style="margin-top: -10%"></nb-icon>&nbsp;
+  </nb-action>
+
+    <nb-action class="control-item" style="padding: 0 0.60rem;" *ngIf="setting_option">
+      <nb-icon class="action-icon" nbTooltip="Alarm Log"  icon="bell-outline" status="warning" style="margin-top: -10%"></nb-icon>&nbsp;
+      <input class="tgl tgl-light" id="alarm_log" #alarm_log type="checkbox" [checked]="alarmlog_status" (change)="updateSystemSettings(alarm_log.checked,'1')" />
+      <label class="tgl-btn" for="alarm_log"></label>
+  </nb-action>
+
+  <nb-action class="control-item" style="padding: 0 0.60rem;" *ngIf="setting_option">
+    <nb-icon class="action-icon"  nbTooltip="Email Notification" icon="shopping-bag-outline" status="warning" style="margin-top: -10%"></nb-icon>&nbsp;
+    <input class="tgl tgl-light"  nbTooltip="Email Notification"  id="email_notifi" #email_notifi type="checkbox" [checked]="email_status" (change)="updateSystemSettings(email_notifi.checked,'2')" />
+    <label class="tgl-btn" for="email_notifi"></label>
+  </nb-action>
+
+    <nb-action class="control-item" style="padding: 0 0.60rem;">
+        <!-- <p>{{today | date:'fullDate'}} {{today | date:'h:mm:ss a'}}</p> -->
+        <p style="font-weight: bold;font-size: 1.13rem;">{{today | date:'dd/MM/yyyy'}} {{today | date:'HH:mm:ss'}}</p>  
+    </nb-action>
+   
+    <!--<nb-action class="control-item" icon="bell-outline"></nb-action> -->
+  
+    <nb-action class="user-action" *nbIsGranted="['view', 'user']" style="padding: 0 0.60rem;">
+      <nb-user [nbContextMenu]="userMenu"
+               [onlyPicture]="userPictureOnly"
+               [name]="username"
+               [picture]="user?.picture">
+      </nb-user>
+    </nb-action>
+  </nb-actions>
+</div>

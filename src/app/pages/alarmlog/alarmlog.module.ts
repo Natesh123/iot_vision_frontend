@@ -1,0 +1,62 @@
+import { NgModule } from '@angular/core';
+import {
+  NbActionsModule,
+  NbButtonModule,
+  NbCardModule,
+  NbTabsetModule,
+  NbUserModule,
+  NbRadioModule,
+  NbSelectModule,
+  NbListModule,
+  NbIconModule,
+  NbCheckboxModule,
+  NbDialogModule,
+  NbInputModule,
+  NbPopoverModule,
+  NbTooltipModule,
+  NbWindowModule
+} from '@nebular/theme';
+
+import { NgxEchartsModule } from 'ngx-echarts';
+import { FormsModule } from '@angular/forms';
+import { ThemeModule } from '../../@theme/theme.module';
+import { AlarmlogComponent } from './alarmlog.component';
+import { Ng2SmartTableModule } from 'ng2-smart-table';
+import { RemarkComponent } from '../alarmlog/remark/remark.component';
+import { AuremarkComponent } from '../alarmlog/auremark/auremark.component';
+
+@NgModule({
+  imports: [
+    ThemeModule,
+    NbCardModule,
+    NbUserModule,
+    NbButtonModule,
+    NbTabsetModule,
+    NbActionsModule,
+    NbRadioModule,
+    NbSelectModule,
+    NbListModule,
+    NbIconModule,
+    NbButtonModule,
+    NgxEchartsModule,
+    NbCheckboxModule,
+    NbDialogModule,
+    NbInputModule,
+    NbPopoverModule,
+    NbTooltipModule,
+    NbWindowModule,
+    FormsModule,
+    Ng2SmartTableModule
+  ],
+  declarations: [
+    AlarmlogComponent,
+    RemarkComponent,
+    AuremarkComponent
+    
+  ],
+  entryComponents:[
+    RemarkComponent,
+    AuremarkComponent
+  ]
+})
+export class AlarmlogModule { }

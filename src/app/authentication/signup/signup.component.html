@@ -1,0 +1,71 @@
+<ngx-blank-column-layout>
+   
+  <router-outlet>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="../../../assets/fonts/material-icon/css/material-design-iconic-font.css">
+  
+  <div class="main">
+
+      <!-- Sign up form -->
+      <section class="signup">
+          <div class="container">
+              <div class="signup-content">
+                  <div class="signup-form">
+                    <h3 style="margin-bottom: 10px;" class="form-title"><img src="../../../assets/images/signin.png" alt="sing up image"> IOT Application</h3>
+                    <h6 class="form-title">Sign Up</h6>
+                      <form class="register-form" name="form" (ngSubmit)="f.form.valid && signup()" #f="ngForm" novalidate class="form" >
+                          <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !name.valid }">
+                              <label for="name"><i class="fa fa-user"></i></label>
+                              <input type="text"  name="name" [(ngModel)]="model.name" #name="ngModel" required placeholder="Your Name"/>
+                          </div>
+                          <div *ngIf="f.submitted && !name.valid" class="alert-warning">Name is required</div>
+                          <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !email.valid }">
+                              <label for="email"><i class="fas fa-envelope"></i></label>
+                              <input type="email" name="email"  [(ngModel)]="model.email" #email="ngModel" required placeholder="Your Email"/>
+                          </div>
+                          <div *ngIf="f.submitted && !email.valid" class="alert-warning">Email is required</div>
+                          <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !mobilenumber.valid }">
+                            <label for="email"><i class="fa fa-phone"></i></label>
+                            <input type="text" name="mobilenumber"  [(ngModel)]="model.mobilenumber" #mobilenumber="ngModel" required placeholder="Your Mobile Number"/>
+                        </div>
+                        <div *ngIf="f.submitted && !mobilenumber.valid" class="alert-warning">Mobile Number is required</div>
+                          <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !pass.valid }">
+                              <label for="pass"><i class="fa fa-lock"></i></label>
+                              <input type="password" name="pass"  [(ngModel)]="model.pass" #pass="ngModel" required placeholder="Password"/>
+                          </div>
+                          <div *ngIf="f.submitted && !pass.valid" class="alert-warning">Password is required</div>
+                          <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !re_pass.valid }">
+                              <label for="re-pass"><i class="fa fa-redo"></i></label>
+                              <input type="password" name="re_pass" [(ngModel)]="model.re_pass" #re_pass="ngModel"  required placeholder="Repeat your password"/>
+                          </div>
+                          <div *ngIf="f.submitted && !re_pass.valid" class="alert-warning">Repeat Your Password is required</div>
+
+                          <!-- <div class="form-group">
+                            <input type="checkbox" name="agree-term" id="agree-term" class="agree-term" />
+                            <label for="agree-term" class="label-agree-term"><span><span></span></span>I agree all statements in  <a href="#" class="term-service">Terms of service</a></label>
+                        </div> -->
+
+                          <div class="form-group"  [ngClass]="{ 'has-error': f.submitted && !agreeterm.valid }">
+                              <input type="checkbox" name="agreeterm"  id="agreeterm" [(ngModel)]="model.agreeterm" required #agreeterm="ngModel" class="agree-term" />
+                              <label for="agreeterm" class="label-agree-term"><span><span></span></span>I agree all statements in  <a href="#" class="term-service">Terms of service</a></label>
+                          </div>
+                          <div *ngIf="f.submitted && !agreeterm.valid" class="alert-warning">Accept the Terms and Condtions</div>
+                          <div class="form-group form-button">
+                              <input type="submit" name="signup" id="signup" class="form-submit" value="Register"/>
+                          </div>
+                      </form>
+                  </div>
+                  <div class="signup-image">
+                      <figure><img src="../../../assets/images/signup-image.jpg" alt="sing up image"></figure>
+                      <a routerLink="/authentication/signin" class="signup-image-link" style="text-decoration: underline;">I am already member</a>
+                  </div>
+              </div>
+          </div>
+      </section>
+
+
+  </div>
+
+
+  </router-outlet>
+</ngx-blank-column-layout>

@@ -1,0 +1,33 @@
+@import '../../@theme/styles/themes';
+@import '~bootstrap/scss/mixins/breakpoints';
+@import '~@nebular/theme/styles/global/breakpoints';
+
+.alert-warning {
+    color: red;
+    padding-bottom: 10px;
+    background-color: transparent;
+    border-color: transparent;
+}
+
+tr td.ng2-smart-actions,
+ng2-st-tbody-custom {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    height: 100%;
+    color: #1e6bb8 !important;
+}
+
+.ng2-smart-action-delete-delete,
+.ng2-smart-action-edit-edit,
+.ng2-smart-action-custom-custom {
+    padding-top: 0.8em;
+    color: #1e6bb8 !important;
+}
+
+.ng2-smart-action.ng2-smart-action-custom-custom:hover {
+    color: #1e6bb8 !important;
+}
+
+
+
